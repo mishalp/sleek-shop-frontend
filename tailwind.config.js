@@ -17,6 +17,9 @@ export default {
       fontFamily: {
         'sans': ['"Inter"', ...defaultTheme.fontFamily.sans],
         'popins': 'Poppins, Arial, sans-serif',
+      },
+      transitionProperty: {
+        'max-height': 'max-height',
       }
     },
   },
