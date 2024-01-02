@@ -3,7 +3,7 @@ import headset from '../../../../assets/images/headset.png'
 
 function HeroSection() {
     return (
-        <div className="grid grid-cols-1 sm:max-lg:grid-rows-2 sm:max-lg: lg:grid-cols-7 lg:gap-8 content-center w-full h-screen font-popins relative bg-primary">
+        <div className="grid grid-cols-1 sm:max-lg:grid-rows-2 bg-[#E0E0E0] lg:grid-cols-7 lg:gap-8 content-around w-full h-screen font-popins relative">
             <div className="lg:h-screen max-lg:px-4 lg:col-span-4 grid lg:pl-16 items-center pt-20 justify-start">
                 <div className="grid text-tertiory justify-items-start gap-2 lg:gap-4">
                     <p className="text-lg lg:text-2xl font-medium">Up to 50% OFF on</p>
