@@ -1,4 +1,5 @@
 import HomeNav from '../../components/homeNav/HomeNav'
+import CategorisSection from './components/categoriesSection/CategorisSection'
 import FeaturesSection from './components/featuresSection/FeaturesSection'
 import HeroSection from './components/heroSection/HeroSection'
 
@@ -8,6 +9,7 @@ function Home() {
             <HomeNav />
             <HeroSection />
             <FeaturesSection />
+            <CategorisSection />
         </div>
     )
 }
