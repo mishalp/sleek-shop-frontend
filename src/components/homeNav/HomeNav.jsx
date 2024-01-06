@@ -52,7 +52,7 @@ function HomeNav() {
     const [show, setShow] = useState(false)
 
     return (
-        <div className={`w-full z-10 text-white text-lg justify-between items-center bg-secondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
+        <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-secondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
             <img src={menu} alt="" className='xl:hidden w-7' onClick={() => setShow(!show)} />
             <div className="flex gap-6 justify-center items-center sm:justify-self-start">
                 <img src={logo} className='w-28' alt="" />

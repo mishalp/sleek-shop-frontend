@@ -42,7 +42,7 @@ const categoris = [
     },
 ]
 
-function CategorisSection() {
+function CategoriesSection() {
     return (
         <div className="xl:p-6 font-popins overflow-auto disableScrollBar">
             <div className="p-4 m-6 xl:m-0 bg-white flex w-fit xl:w-auto xl:grid xl:grid-cols-5 justify-items-center gap-4 rounded-md">
@@ -57,4 +57,4 @@ function CategorisSection() {
     )
 }
 
-export default CategorisSection
+export default CategoriesSection
