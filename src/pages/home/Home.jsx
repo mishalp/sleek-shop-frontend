@@ -1,5 +1,6 @@
 import HomeNav from '../../components/homeNav/HomeNav'
 import BestSellingSection from './components/bestSellingSection/BestSellingSection'
+import BrandSection from './components/brandSection/BrandSection'
 import CategorisSection from './components/categoriesSection/CategorisSection'
 import FeaturesSection from './components/featuresSection/FeaturesSection'
 import HeroSection from './components/heroSection/HeroSection'
@@ -12,6 +13,7 @@ function Home() {
             <FeaturesSection />
             <CategorisSection />
             <BestSellingSection />
+            <BrandSection />
         </div>
     )
 }
