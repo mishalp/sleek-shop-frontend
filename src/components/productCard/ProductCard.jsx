@@ -20,7 +20,7 @@ function ProductCard({ item }) {
                 <div className="px-2 py-1 text-sm rounded-lg h-fit justify-self-start bg-tertiory text-white">
                     {item.rating.rate}★
                 </div>
-                <h3 className="font-semibold text-lg">₹{item.price * 5}</h3>
+                <h3 className="font-semibold text-xl">₹{item.price * 5}</h3>
             </div>
         </div>
     )

@@ -1,3 +1,4 @@
+import Footer from '../../components/footer/Footer'
 import HomeNav from '../../components/homeNav/HomeNav'
 import BestSellingSection from './components/bestSellingSection/BestSellingSection'
 import BrandSection from './components/brandSection/BrandSection'
@@ -16,6 +17,7 @@ function Home() {
             <BestSellingSection />
             <BrandSection />
             <SubscribeSection />
+            <Footer />
         </div>
     )
 }
