@@ -100,8 +100,8 @@ function Footer() {
                     <p className='text-lg '>The home and elements needed to create beutiful products.</p>
                     <div className="flex gap-4 items-center">
                         {socials.map((item, key) => (
-                            <a href="#">
-                                <img src={item} className='' key={key} alt="" />
+                            <a href="#" key={key}>
+                                <img src={item} className='' alt="" />
                             </a>
                         ))}
                     </div>
@@ -109,8 +109,8 @@ function Footer() {
                 {footerLinks.map(item => (
                     <div className="flex flex-col gap-2" key={item.title}>
                         <h4 className='font-medium' >{item.title}</h4>
-                        {item.links.map(item => (
-                            <a className='text-[#9D9D9D]' href={item.link} key={item.text}>{item.text}</a>
+                        {item.links.map((item, key) => (
+                            <a className='text-[#9D9D9D]' href={item.link} key={key}>{item.text}</a>
                         ))}
                     </div>
                 ))}

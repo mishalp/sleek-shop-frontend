@@ -1,11 +1,21 @@
 import heart from '../../assets/icons/heart_black.svg'
 import cart from '../../assets/icons/cart_black.svg'
+import { useRef } from 'react'
+import { formatPrice } from '../../utils/utils'
 
-function ProductCard({ item }) {
+function ProductCard({ item, id }) {
+
+    const ref = useRef()
+
+    const handleClick = (e) => {
+        if (ref.current.contains(e.target))
+            e.preventDefault()
+    }
+
     return (
-        <div className="min-w-64 xl:min-w-fit bg-white p-3 grid group grid-cols-1 shadow gap-2 rounded-md overflow-hidden">
-            <div className="p-3 overflow-hidden flex justify-center items-center relative">
-                <img src={item.image} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" />
+        <a href={`/products/${id}`} onClick={handleClick} className="min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded overflow-hidden">
+            <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
+                <img src={item.images[0]} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" />
                 <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden group-hover:flex items-center justify-center">
                     <div className="p-2 bg-white active:scale-75 duration-200 cursor-pointer flex items-center justify-center rounded-full shadow-md">
                         <img src={heart} alt="" />
@@ -20,9 +30,9 @@ function ProductCard({ item }) {
                 <div className="px-2 py-1 text-sm rounded-lg h-fit justify-self-start bg-tertiory text-white">
                     {item.rating.rate}★
                 </div>
-                <h3 className="font-semibold text-xl">₹{item.price * 5}</h3>
+                <h3 className="font-semibold text-xl">₹{formatPrice(item.price)}</h3>
             </div>
-        </div>
+        </a>
     )
 }
 

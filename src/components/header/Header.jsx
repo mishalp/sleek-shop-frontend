@@ -11,7 +11,7 @@ import { useState } from 'react'
 const links = [
     {
         text: "Home",
-        link: "#"
+        link: "/"
     },
     {
         text: "Products",
@@ -47,7 +47,7 @@ const iconLinks = [
     }
 ]
 
-function HomeNav() {
+function Header() {
 
     const [show, setShow] = useState(false)
 
@@ -60,8 +60,8 @@ function HomeNav() {
             </div>
 
             <div className="gap-6 items-center justify-self-center hidden lg:flex">
-                {links.map(item => (
-                    <a key={item.text} href={item.link} className='font-popins font-medium' >{item.text}</a>
+                {links.map((item, key) => (
+                    <a key={key} href={item.link} className='font-popins font-medium' >{item.text}</a>
                 ))}
             </div>
 
@@ -81,7 +81,7 @@ function HomeNav() {
                 <SearchInput className="w-ful" />
                 <div className='flex flex-col sm:hidden gap-4 justify-between sm:justify-start w-full'>
                     {iconLinks.map(item => (
-                        <div key={item} className={`flex gap-4 ${item?.styles}`}>
+                        <div key={item.name} className={`flex gap-4 ${item?.styles}`}>
                             <img src={item.icon} className='w-[1.5rem]' alt="" />
                             <p className='font-popins font-medium active:bg-primary active:text-secondary'>{item.name}</p>
                         </div>
@@ -97,4 +97,4 @@ function HomeNav() {
     )
 }
 
-export default HomeNav
+export default Header
