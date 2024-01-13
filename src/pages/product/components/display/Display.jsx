@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Button from "../../../../components/button/Button"
+import { ButtonShad } from "@/components/ui/button"
 
 function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
     const lens = useRef()
@@ -74,7 +75,7 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
         <div ref={display} className="p-3 flex gap-3 w-full sticky top-[100px] h-fit">
             <div className="flex flex-col gap-4 ">
                 {images.map((img, key) => (
-                    <img src={img} onClick={() => setCurrent(key)} key={key} className={`max-w-14 cursor-pointer border-2 ${current === key ? 'border-tertiory' : 'border-slate-300'} aspect-square object-contain rounded p-2 h-auto`} alt="" />
+                    <img src={img} onClick={() => setCurrent(key)} key={key} className={`max-w-14 cursor-pointer border-2 ${current === key ? 'border-mytertiory' : 'border-slate-300'} aspect-square object-contain rounded p-2 h-auto`} alt="" />
                 ))}
             </div>
             <div className="flex flex-col gap-3 items-center w-full">

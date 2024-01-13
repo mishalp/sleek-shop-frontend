@@ -13,7 +13,7 @@ function ProductCard({ item, id }) {
     }
 
     return (
-        <a href={`/products/${id}`} onClick={handleClick} className="min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded overflow-hidden">
+        <a href={`/products/${id}`} onClick={handleClick} className="min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded-sm overflow-hidden">
             <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
                 <img src={item.images[0]} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" />
                 <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden group-hover:flex items-center justify-center">
@@ -27,7 +27,7 @@ function ProductCard({ item, id }) {
             </div>
             <div className="z-[1] bg-white flex flex-col items-start gap-2 justify-between">
                 <p className="text-md w-full overflow-hidden whitespace-nowrap text-ellipsis md:text-xl">{item.title.substring(0, 30)}{item.title.length > 30 && "..."}</p>
-                <div className="px-2 py-1 text-sm rounded-lg h-fit justify-self-start bg-tertiory text-white">
+                <div className="px-2 py-1 text-sm rounded-lg h-fit justify-self-start bg-mytertiory text-white">
                     {item.rating.rate}★
                 </div>
                 <h3 className="font-semibold text-xl">₹{formatPrice(item.price)}</h3>

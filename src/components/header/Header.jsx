@@ -52,7 +52,7 @@ function Header() {
     const [show, setShow] = useState(false)
 
     return (
-        <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-secondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
+        <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
             <img src={menu} alt="" className='xl:hidden w-7' onClick={() => setShow(!show)} />
             <div className="flex gap-6 justify-center items-center sm:justify-self-start">
                 <img src={logo} className='w-28' alt="" />
@@ -83,13 +83,13 @@ function Header() {
                     {iconLinks.map(item => (
                         <div key={item.name} className={`flex gap-4 ${item?.styles}`}>
                             <img src={item.icon} className='w-[1.5rem]' alt="" />
-                            <p className='font-popins font-medium active:bg-primary active:text-secondary'>{item.name}</p>
+                            <p className='font-popins font-medium active:bg-myprimary active:text-mysecondary'>{item.name}</p>
                         </div>
                     ))}
                 </div>
                 <div className="grid grid-cols-1 items-center lg:hidden">
                     {links.map(item => (
-                        <a key={item.text} href={item.link} className='font-popins font-medium p-2 active:bg-primary active:text-secondary' >{item.text}</a>
+                        <a key={item.text} href={item.link} className='font-popins font-medium p-2 active:bg-myprimary active:text-mysecondary' >{item.text}</a>
                     ))}
                 </div>
             </div>

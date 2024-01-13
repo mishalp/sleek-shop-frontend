@@ -14,7 +14,7 @@ function Home() {
     console.log(products);
 
     return (
-        <div className='w-screen max-w-full bg-primary'>
+        <div className='w-screen max-w-full bg-myprimary'>
             <Header />
             <HeroSection />
             <FeaturesSection />

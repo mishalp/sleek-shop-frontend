@@ -28,7 +28,7 @@ const features = [
 
 function FeaturesSection() {
     return (
-        <div className="p-6 max-lg:px-4 font-popins text-secondary">
+        <div className="p-6 max-lg:px-4 font-popins text-mysecondary">
             <div className="grid grid-cols-[auto,auto] gap-y-4 lg:grid-cols-[auto,auto,auto,auto] rounded-md shadow-md items-center justify-between sm:justify-around lg:justify-between bg-white p-4 lg:py-8 lg:px-8">
                 {features.map(item => (
                     <div className="flex flex-col xl:flex-row gap-4 w-fit items-center" key={item.title}>

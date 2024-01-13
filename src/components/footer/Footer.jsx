@@ -93,7 +93,7 @@ const footerLinks = [
 
 function Footer() {
     return (
-        <div className="px-4 sm:px-12 py-8 bg-secondary text-white flex flex-col gap-4">
+        <div className="px-4 sm:px-12 py-8 bg-mysecondary text-white flex flex-col gap-4">
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 justify-center items-center">
                 <div className="flex flex-col gap-4">
                     <img src={logo} className='max-w-24' alt="" />

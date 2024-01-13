@@ -27,7 +27,7 @@ function Details({ canvas, product, zoomImg, current }) {
                             <p>{product.shope.email}</p>
                             <p>{product.shope.address}</p>
                         </div>
-                        <button className="bg-tertiory text-white rounded-lg px-8 py-4 h-fit">Visit Store</button>
+                        <button className="bg-mytertiory text-white rounded-lg px-8 py-4 h-fit">Visit Store</button>
                     </div>
                 </div>
             </div>

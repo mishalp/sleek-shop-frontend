@@ -3,7 +3,7 @@ import ProductDetailsSection from "./components/productDetailsSection/ProductDet
 
 function Product() {
     return (
-        <div className='w-screen max-w-full bg-primary relative'>
+        <div className='w-screen max-w-full bg-myprimary relative'>
             <div className="flex flex-col">
                 <Header />
                 <ProductDetailsSection />
