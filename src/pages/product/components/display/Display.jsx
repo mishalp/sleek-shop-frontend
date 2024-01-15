@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import Button from "../../../../components/button/Button"
-import { ButtonShad } from "@/components/ui/button"
+import Button from "../../../../components/button/MyButton"
 
 function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
     const lens = useRef()
