@@ -1,4 +1,4 @@
-import Button from "../../../../components/button/Button"
+import Button from "../../../../components/button/MyButton"
 import headset from '../../../../assets/images/headset.png'
 
 function HeroSection() {
