@@ -19,6 +19,19 @@ const Input = React.forwardRef(({ className, onChange, field, type, id, ...props
 })
 Input.displayName = "Input"
 
-export { Input }
+export default Input
 
-export const MyInput = ({ field, type, className, onChange, id, ...props }) => <Input placeholder="" {...props} id={id} onChange={onchange} type={type} field={field} className={`focus-visible:ring-1 !ring-offset-0 !ring-mytertiory ${className}`} />
+function MyInput({ field, type, className, onChange, id, ...props }) {
+  return (
+    <Input
+      {...props}
+      id={id}
+      onChange={onchange}
+      type={type}
+      field={field}
+      className={`focus-visible:ring-1 !ring-offset-0 !ring-mytertiory ${className}`}
+    />
+  )
+}
+
+export { MyInput }
