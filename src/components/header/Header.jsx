@@ -7,6 +7,7 @@ import cart from '../../assets/icons/cart.svg'
 import profile from '../../assets/icons/profile.svg'
 import menu from '../../assets/icons/menu.svg'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const links = [
     {
@@ -31,7 +32,8 @@ const iconLinks = [
     {
         name: "Become a Seller",
         icon: shope,
-        styles: 'sm:hidden'
+        styles: 'sm:hidden',
+        link: '/seller/login'
     },
     {
         name: "Whishlist",
@@ -50,6 +52,7 @@ const iconLinks = [
 function Header() {
 
     const [show, setShow] = useState(false)
+    const { isAuthenticated } = useSelector(store => store.seller)
 
     return (
         <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
@@ -66,10 +69,10 @@ function Header() {
             </div>
 
             <div className="flex gap-6 justify-end">
-                <div className='gap-2 items-center hidden sm:flex'>
+                <a href={isAuthenticated ? "/seller/dashboard" : "/seller/login"} className='gap-2 items-center hidden sm:flex'>
                     <img src={shope} className='w-[1.5rem]' alt="" />
-                    <a href="#" className='font-popins font-medium' >Become a Seller</a>
-                </div>
+                    <p className='font-popins font-medium' >{isAuthenticated ? "Seller Dashboard" : "Become a Seller"}</p>
+                </a>
                 <div className='flex gap-4'>
                     <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" />
                     <img src={cart} className={`w-[1.5rem] ${show && 'hidden'} sm:flex`} alt="" />
