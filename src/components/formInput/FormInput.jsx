@@ -3,19 +3,27 @@ import Input from '../input/Input'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { useState } from 'react';
 import avatar from '@/assets/icons/avatar.svg'
+import { Textarea } from '../ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
-function FormInput({ form, label, id, className, onChange, type, name, children, ...props }) {
+function FormInput({ form, label, id, className, onChange, type, name, handleImage, list, dp, ...props }) {
 
     const renderInputes = (field) => {
         switch (type) {
             case "password":
                 return <PasswordInput field={field} />
             case "image":
-                return <ImageInput form={form} name={name} />
+                return <ImageInput form={form} name={name} handleImage={handleImage} display={dp} />
+            case "textarea":
+                return <Textarea {...field} />
+            case "select":
+                return
             default:
                 return <Input {...props} field={field} id={id} className={className} onChange={onChange} type={type} />
         }
     }
+
+    if (type === "select") return <SelectInput form={form} name={name} list={list} label={label} />
 
     return (
         <FormField
@@ -49,7 +57,7 @@ function PasswordInput({ field }) {
     )
 }
 
-function ImageInput({ form, name }) {
+function ImageInput({ form, name, handleImage, display = true }) {
 
     const [dp, setDp] = useState(null)
 
@@ -69,16 +77,41 @@ function ImageInput({ form, name }) {
     }
     return (
         <div className="flex items-center gap-8 relative">
-            <img src={dp ? dp : avatar} className="w-7 aspect-square object-cover rounded-full" alt="" />
+            {display && <img src={dp ? dp : avatar} className="w-7 aspect-square object-cover rounded-full" alt="" />}
             <input
                 type="file"
                 className="sr-only"
-                onChange={handleFileInput}
+                onChange={handleImage ? handleImage : handleFileInput}
                 id={name}
             />
-            <label htmlFor="avatar" className="text-sm cursor-pointer ring-0 rounded-md py-2 px-5 border border-input">Upload photo</label>
+            <label htmlFor={name} className="text-sm cursor-pointer ring-0 rounded-md py-2 px-5 border border-input">Upload photo</label>
         </div>
     )
+}
+
+function SelectInput({ form, name, label, list }) {
+    return <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+            <FormItem>
+                <FormLabel>{label}</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                        <SelectTrigger>
+                            <SelectValue placeholder={`Select a ${label}`} />
+                        </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        {list.map((item, i) => (
+                            <SelectItem key={i} value={item}>{item}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <FormMessage />
+            </FormItem>
+        )}
+    />
 }
 
 export default FormInput

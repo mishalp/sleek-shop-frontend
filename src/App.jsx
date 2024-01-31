@@ -8,21 +8,22 @@ import SellerLogin from './pages/seller/login/SellerLogin'
 import SellerSignUp from './pages/seller/signUp/SellerSignUp'
 import Product from './pages/product/Product'
 import useLoadApp from './hooks/useLoadApp'
+import AllOrders from './pages/seller/allOrders/AllOrders'
+import AllProducts from './pages/seller/allProducts/AllProducts'
+import CreateProduct from './pages/seller/createProduct/CreateProduct'
 
 function App() {
 
   const loading = useLoadApp()
-  console.log(loading);
 
   return (
     <>
       <BrowserRouter>
-        {/* <UserRoutes />
-        <SellerRotes /> */}
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/products/:prodId' element={<Product />} />
-          {/* ========== Unprotected Routes ======== */}
+
+          {/* ========== Seller Unprotected Routes ======== */}
           <Route exact path='/seller/signup' element={
             <Unprotected>
               <SellerSignUp />
@@ -36,10 +37,25 @@ function App() {
           <Route exact path='/seller/activation/:activationToken' element={
             <SellerActivation />}
           />
-          {/* ========== Protected Routes ======== */}
+          {/* ==========Seller Protected Routes ======== */}
           <Route exact path='/seller/dashboard' element={
             <Protected>
               <SellerDashboard />
+            </Protected>}
+          />
+          <Route exact path='/seller/all-orders' element={
+            <Protected>
+              <AllOrders />
+            </Protected>}
+          />
+          <Route exact path='/seller/all-products' element={
+            <Protected>
+              <AllProducts />
+            </Protected>}
+          />
+          <Route exact path='/seller/create-product' element={
+            <Protected>
+              <CreateProduct />
             </Protected>}
           />
 
