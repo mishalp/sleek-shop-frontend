@@ -2,6 +2,7 @@ import heart from '../../assets/icons/heart_black.svg'
 import cart from '../../assets/icons/cart_black.svg'
 import { useRef } from 'react'
 import { formatPrice } from '../../utils/utils'
+import { Link } from 'react-router-dom'
 
 function ProductCard({ item, id }) {
 
@@ -13,7 +14,7 @@ function ProductCard({ item, id }) {
     }
 
     return (
-        <a href={`/products/${id}`} onClick={handleClick} className="min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded-sm overflow-hidden">
+        <Link to={`/products/${id}`} onClick={handleClick} className="min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded-sm overflow-hidden">
             <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
                 <img src={item.images[0]} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" />
                 <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden group-hover:flex items-center justify-center">
@@ -32,7 +33,7 @@ function ProductCard({ item, id }) {
                 </div>
                 <h3 className="font-semibold text-xl">₹{formatPrice(item.price)}</h3>
             </div>
-        </a>
+        </Link>
     )
 }
 

@@ -8,6 +8,7 @@ import profile from '../../assets/icons/profile.svg'
 import menu from '../../assets/icons/menu.svg'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const links = [
     {
@@ -58,7 +59,9 @@ function Header() {
         <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
             <img src={menu} alt="" className='xl:hidden w-7' onClick={() => setShow(!show)} />
             <div className="flex gap-6 justify-center items-center sm:justify-self-start">
-                <img src={logo} className='w-28' alt="" />
+                <Link to='/'>
+                    <img src={logo} className='w-28' alt="" />
+                </Link>
                 <SearchInput className='hidden xl:flex' />
             </div>
 
@@ -69,10 +72,10 @@ function Header() {
             </div>
 
             <div className="flex gap-6 justify-end">
-                <a href={isAuthenticated ? "/seller/dashboard" : "/seller/login"} className='gap-2 items-center hidden sm:flex'>
+                <Link to={isAuthenticated ? "/seller/dashboard" : "/seller/login"} className='gap-2 items-center hidden sm:flex'>
                     <img src={shope} className='w-[1.5rem]' alt="" />
                     <p className='font-popins font-medium' >{isAuthenticated ? "Seller Dashboard" : "Become a Seller"}</p>
-                </a>
+                </Link>
                 <div className='flex gap-4'>
                     <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" />
                     <img src={cart} className={`w-[1.5rem] ${show && 'hidden'} sm:flex`} alt="" />
@@ -92,7 +95,7 @@ function Header() {
                 </div>
                 <div className="grid grid-cols-1 items-center lg:hidden">
                     {links.map(item => (
-                        <a key={item.text} href={item.link} className='font-popins font-medium p-2 active:bg-myprimary active:text-mysecondary' >{item.text}</a>
+                        <Link key={item.text} to={item.link} className='font-popins font-medium p-2 active:bg-myprimary active:text-mysecondary' >{item.text}</Link>
                     ))}
                 </div>
             </div>

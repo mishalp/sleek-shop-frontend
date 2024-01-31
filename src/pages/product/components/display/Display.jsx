@@ -67,7 +67,9 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
             // canvas.current.style.backgroundImage = `url('${images[current]}')`
             image.current.addEventListener("mouseleave", () => { lens.current.style.display = "none"; canvas.current.style.display = "none" })
         }
-        return () => image.current.removeEventListener("mousemove", trackLense)
+        return () => {
+            if (image.current) image.current.removeEventListener("mousemove", trackLense)
+        }
     }, [image, lens])
 
     return (
