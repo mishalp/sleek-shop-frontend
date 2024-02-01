@@ -28,7 +28,7 @@ const formSchema = z.object({
         })
         .min(3, {
             message: "features must be atleast 3"
-        }).max(5, {
+        }).max(6, {
             message: "features must not be more than 5"
         }),
     originalPrice: z.coerce.number({
@@ -49,6 +49,17 @@ const formSchema = z.object({
     category: z.string()
 })
 
+const categories = [
+    "Computers and Laptops",
+    "Cosmetics and body care",
+    "Accesories",
+    "Cloths",
+    "Shoes",
+    "Gifts",
+    "Mobile and Tablets",
+    "Music and Gaming",
+    "Others"
+]
 
 function ProductForm() {
     const { toast } = useToast()
@@ -138,7 +149,7 @@ function ProductForm() {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
                         <FormInput form={form} name="name" label="Name" />
                         <FormInput form={form} name="description" type="textarea" label="Description" />
-                        <FormInput form={form} name="category" list={["electronics", "cloths"]} type="select" label="Category" />
+                        <FormInput form={form} name="category" list={categories} type="select" label="Category" />
                         <FormInput form={form} name="feature" label="Features" />
                         <Button onClick={featureSubmit} className="mt-3 bg-mytertiory" type="button">
                             Add Feature
