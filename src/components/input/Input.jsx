@@ -1,8 +1,8 @@
-import DefaultInput from '@/components/ui/input'
+import { Input as ShadInp } from '@/components/ui/input'
 
 function Input({ field, type, className, onChange, id, ...props }) {
     return (
-        <DefaultInput
+        <ShadInp
             {...props}
             id={id}
             onChange={onchange}

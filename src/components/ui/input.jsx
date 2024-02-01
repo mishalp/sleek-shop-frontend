@@ -19,7 +19,7 @@ const Input = React.forwardRef(({ className, onChange, field, type, id, ...props
 })
 Input.displayName = "Input"
 
-export default Input
+export { Input }
 
 function MyInput({ field, type, className, onChange, id, ...props }) {
   return (

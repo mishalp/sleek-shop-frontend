@@ -12,7 +12,13 @@ export const productApi = createApi({
                 credentials: 'include'
             })
         }),
+        getAllProducts: builder.query({
+            query: () => ({
+                url: 'all-prodcuts',
+                credentials: 'include'
+            })
+        })
     })
 })
 
-export const { useCreateProductMutation } = productApi
+export const { useCreateProductMutation, useGetAllProductsQuery } = productApi
