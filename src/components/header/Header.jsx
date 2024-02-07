@@ -1,14 +1,13 @@
 import logo from '../../assets/icons/newLogo.svg'
 import shope from '../../assets/icons/shope.svg'
 import SearchInput from '../searchInput/SearchInput'
-
 import heart from '../../assets/icons/heart.svg'
 import cart from '../../assets/icons/cart.svg'
 import profile from '../../assets/icons/profile.svg'
 import menu from '../../assets/icons/menu.svg'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useSellerVerifyQuery } from '@/app/services/seller'
 
 const links = [
     {
@@ -53,7 +52,7 @@ const iconLinks = [
 function Header() {
 
     const [show, setShow] = useState(false)
-    const { isAuthenticated } = useSelector(store => store.seller)
+    const { isLoading, isError } = useSellerVerifyQuery()
 
     return (
         <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
@@ -72,9 +71,9 @@ function Header() {
             </div>
 
             <div className="flex gap-6 justify-end">
-                <Link to={isAuthenticated ? "/seller/dashboard" : "/seller/login"} className='gap-2 items-center hidden sm:flex'>
+                <Link to={!isError && !isLoading ? "/seller/dashboard" : "/seller/login"} className='gap-2 items-center hidden sm:flex'>
                     <img src={shope} className='w-[1.5rem]' alt="" />
-                    <p className='font-popins font-medium' >{isAuthenticated ? "Seller Dashboard" : "Become a Seller"}</p>
+                    <p className='font-popins font-medium' >{!isError && !isLoading ? "Seller Dashboard" : "Become a Seller"}</p>
                 </Link>
                 <div className='flex gap-4'>
                     <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" />

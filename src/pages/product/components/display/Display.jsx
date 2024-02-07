@@ -75,14 +75,14 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
     return (
         <div ref={display} className="p-3 flex gap-3 w-full sticky top-[100px] h-fit">
             <div className="flex flex-col gap-4 ">
-                {images.map((img, key) => (
-                    <img src={img} onClick={() => setCurrent(key)} key={key} className={`max-w-14 cursor-pointer border-2 ${current === key ? 'border-mytertiory' : 'border-slate-300'} aspect-square object-contain rounded p-2 h-auto`} alt="" />
+                {images?.map((img, key) => (
+                    <img src={img.url} onClick={() => setCurrent(key)} key={key} className={`max-w-14 cursor-pointer border-2 ${current === key ? 'border-mytertiory' : 'border-slate-300'} aspect-square object-contain rounded p-2 h-auto`} alt="" />
                 ))}
             </div>
             <div className="flex flex-col gap-3 items-center w-full">
                 <div className="p-3 flex w-full justify-center items-center">
                     <div ref={image} className="relative overflow-hidden cursor-crosshair">
-                        <img src={images[current]} className="max-h-[60vh] w-auto" alt="" />
+                        <img src={images?.[current].url} className="max-h-[60vh] w-auto" alt="" />
                         <div ref={lens} className="bg-[hsla(0,0%,100%,.3)] border-[#ccc] hidden absolute top-0 left-0 aspect-square"></div>
                     </div>
                 </div>

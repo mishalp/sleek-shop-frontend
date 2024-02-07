@@ -22,6 +22,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { useState } from "react"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from "@radix-ui/react-alert-dialog"
+import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog"
 
 
 export function DataTable({ columns, data }) {

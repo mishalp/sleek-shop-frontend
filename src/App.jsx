@@ -11,10 +11,15 @@ import useLoadApp from './hooks/useLoadApp'
 import AllOrders from './pages/seller/allOrders/AllOrders'
 import AllProducts from './pages/seller/allProducts/AllProducts'
 import CreateProduct from './pages/seller/createProduct/CreateProduct'
+import EditProduct from './pages/seller/editProduct/EditProduct'
+import { useSellerVerifyQuery } from './app/services/seller'
 
 function App() {
 
   const loading = useLoadApp()
+  const { isLoading } = useSellerVerifyQuery()
+
+  if (isLoading) return <p>Loading App</p>
 
   return (
     <>
@@ -56,6 +61,11 @@ function App() {
           <Route exact path='/seller/create-product' element={
             <Protected>
               <CreateProduct />
+            </Protected>}
+          />
+          <Route exact path='/seller/product/edit/:id' element={
+            <Protected>
+              <EditProduct />
             </Protected>}
           />
 

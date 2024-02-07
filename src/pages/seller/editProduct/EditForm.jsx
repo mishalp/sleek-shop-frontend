@@ -1,14 +1,16 @@
-import { useCreateProductMutation } from "@/app/services/products"
+import { useEditProductMutation } from "@/app/services/products"
 import FormInput from "@/components/formInput/FormInput"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
+import useGetProduct from "@/hooks/useGetProduct"
 import getFileData from "@/utils/getFileData"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { XCircle } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate, useParams } from "react-router-dom"
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -60,11 +62,16 @@ const categories = [
     "Others"
 ]
 
-function ProductForm() {
+function EditForm() {
     const { toast } = useToast()
-    const [createProduct, { isLoading }] = useCreateProductMutation()
+    const [editProduct, { isLoading }] = useEditProductMutation()
     const [features, setFeatures] = useState([])
     const [images, setImages] = useState([])
+
+    const { id } = useParams()
+    const navigate = useNavigate()
+
+    const product = useGetProduct(id)
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -80,6 +87,23 @@ function ProductForm() {
             category: ""
         },
     })
+    useEffect(() => {
+        if (product) {
+            console.log(product);
+            form.setValue("name", product.name)
+            form.setValue("description", product.description)
+            form.setValue("category", product.category)
+            form.setValue("features", product.features)
+            setFeatures(product.features)
+            form.setValue("originalPrice", product.originalPrice)
+            form.setValue("price", product.price)
+            form.setValue("stock", product.stock)
+            const imageUrls = product.images.map(item => item.url)
+            form.setValue("images", imageUrls)
+            setImages(imageUrls)
+        }
+    }, [product])
+
 
     const featureSubmit = () => {
         const value = form.getValues("feature")
@@ -121,15 +145,13 @@ function ProductForm() {
     async function onSubmit(values) {
         try {
             const { feature, ...data } = values
-            const res = await createProduct(data).unwrap()
+            const res = await editProduct({ data, id }).unwrap()
             toast({
                 title: "Completed",
                 description: res.message,
                 variant: "success",
             })
-            form.reset()
-            setImages([])
-            setFeatures([])
+            navigate("/seller/all-products")
         } catch (error) {
             console.log(error);
             toast({
@@ -141,7 +163,6 @@ function ProductForm() {
 
     return (
         <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-bold font-popins my-8">Create Product</h2>
             <div className="bg-white p-6 min-w-[40rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
@@ -182,4 +203,4 @@ function ProductForm() {
     )
 }
 
-export default ProductForm
+export default EditForm

@@ -1,1 +1,6 @@
-export const formatPrice = (price) => price * 5
+export const formatPrice = (price) => {
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+    }).format(price)
+}

@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux"
+import { useSellerVerifyQuery } from "@/app/services/seller"
 import { Navigate } from "react-router-dom"
 
 function Protected({ children }) {
-    const { isAuthenticated, loading } = useSelector(state => state.seller)
-    if (loading === true) {
+    const { isLoading, isError } = useSellerVerifyQuery()
+    if (isLoading === true) {
         return <p>Loading</p>
     } else {
-        if (isAuthenticated) {
+        if (!isError) {
             return children
         }
         return <Navigate to='/seller/login' />
