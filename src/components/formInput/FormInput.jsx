@@ -16,8 +16,6 @@ function FormInput({ form, label, id, className, onChange, type, name, handleIma
                 return <ImageInput form={form} name={name} handleImage={handleImage} display={dp} />
             case "textarea":
                 return <Textarea {...field} />
-            case "select":
-                return
             default:
                 return <Input {...props} field={field} id={id} className={className} onChange={onChange} type={type} />
         }
@@ -96,7 +94,7 @@ function SelectInput({ form, name, label, list }) {
         render={({ field }) => (
             <FormItem>
                 <FormLabel>{label}</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                     <FormControl>
                         <SelectTrigger>
                             <SelectValue placeholder={`Select a ${label}`} />

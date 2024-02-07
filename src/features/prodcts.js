@@ -3,7 +3,7 @@ import { products } from "../data"
 
 const initialState = {
     loading: true,
-    products: []
+    products: [...products]
 }
 
 const productSlice = createSlice({

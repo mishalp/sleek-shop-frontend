@@ -1,13 +1,24 @@
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, Eye, FilePenLine, MoreHorizontal, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 import {
     Tooltip,
@@ -15,18 +26,34 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useDeleteProductMutation } from "@/app/services/products"
+import { useNavigate } from "react-router-dom"
 
 
 export const columns = [
     {
         accessorKey: "_id",
         header: "ID",
+        cell: ({ row }) => {
+            const id = row.getValue("_id")
+            return <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger className="flex">
+                        <p className="overflow-hidden max-h-4 text-left">{id.substring(0, 10)}{id.length > 10 && "..."}</p>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-[20rem]" >
+                        <p>{id}</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        },
     },
     {
         accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
+                    className="p-0"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
@@ -40,7 +67,7 @@ export const columns = [
             return <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger className="flex">
-                        <p className="overflow-hidden max-h-4 text-left">{name}</p>...
+                        <p className="overflow-hidden max-h-4 text-left">{name.substring(0, 25)}{name.length > 25 && "..."}</p>
                     </TooltipTrigger>
                     <TooltipContent className="max-w-[20rem]" >
                         <p>{name}</p>
@@ -54,6 +81,7 @@ export const columns = [
         header: ({ column }) => {
             return (
                 <Button
+                    className="p-0"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
@@ -77,6 +105,7 @@ export const columns = [
         header: ({ column }) => {
             return (
                 <Button
+                    className="p-0"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
@@ -95,6 +124,7 @@ export const columns = [
         header: ({ column }) => {
             return (
                 <Button
+                    className="p-0"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
@@ -116,10 +146,9 @@ export const columns = [
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const payment = row.original
-
+            const product = row.original
             return (
-                <DropdownMenu>
+                <DropdownMenu >
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
                             <span className="sr-only">Open menu</span>
@@ -128,18 +157,66 @@ export const columns = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment._id)}
-                        >
-                            Copy product ID
-                        </DropdownMenuItem>
                         {/* <DropdownMenuSeparator /> */}
-                        <DropdownMenuItem>View</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <ViewProduct id={product._id} />
+                        <EditProduct id={product._id} />
+                        <DeleteProduct id={product._id} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
         },
     },
 ]
+
+function DeleteProduct({ id }) {
+    const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+
+    const deleteHnadler = (e) => {
+        e.preventDefault()
+        deleteProduct(id)
+    }
+
+    return <DropdownMenuItem
+        disabled={isLoading}
+        onSelect={(e) => e.preventDefault()}
+    ><AlertDialog className="overflow-auto">
+            <AlertDialogTrigger className="flex gap-2 items-center"><Trash2 size={16} color="red" />Delete</AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your product
+                        and remove from our servers.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction disabled={isLoading} onClick={deleteHnadler} >{isLoading ? "deleting..." : "Continue"}</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    </DropdownMenuItem>
+}
+
+function EditProduct({ id }) {
+    const navigate = useNavigate()
+    return (
+        <DropdownMenuItem
+            className="flex gap-2 items-center"
+            onSelect={() => navigate(`/seller/product/edit/${id}`)}
+        >
+            <FilePenLine size={16} color="blue" />Edit
+        </DropdownMenuItem>
+    )
+}
+
+function ViewProduct({ id }) {
+    const navigate = useNavigate()
+    return <DropdownMenuItem
+        className="flex gap-2 items-center"
+        onSelect={() => navigate(`/products/${id}`)}
+    >
+        <Eye size={16} />
+        View
+    </DropdownMenuItem>
+}

@@ -1,10 +1,13 @@
+import { useSellerVerifyQuery } from '@/app/services/seller'
 import logo from '@/assets/icons/newLogo.svg'
 import { Gift, MessageSquareMore, Package, ShoppingBag, Tag } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 function Header() {
-    const { avatar } = useSelector(store => store.seller.info)
+    const { data } = useSellerVerifyQuery()
+    console.log(data);
+    const avatar = data.user.avatar
     return (
         <div className="fixed top-0 z-10 p-4 flex justify-between w-full items-center bg-mysecondary" >
             <Link to={'/'} >
