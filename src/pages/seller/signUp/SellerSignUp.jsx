@@ -118,7 +118,7 @@ function SellerSignUp() {
                         </Button>
                     </form>
                 </Form>
-                <p className="text-sm">Already have an account? <Link className="text-blue-500 font-popins" to='/seller/login'>Log in</Link></p>
+                <p className="text-sm">Already have an account? <Link className="text-blue-500 font-popins" to='/auth/seller/login'>Log in</Link></p>
             </div>
         </div>
     )

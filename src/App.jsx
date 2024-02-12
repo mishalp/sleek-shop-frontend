@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home'
-import Unprotected from './routes/seller/Unprotected'
-import Protected from './routes/seller/Protected'
+import SellerUnprotected from './routes/seller/Unprotected'
+import SellerProtected from './routes/seller/Protected'
 import SellerDashboard from './pages/seller/dashboard/SellerDashboard'
 import SellerActivation from './pages/seller/activation/SellerActivation'
 import SellerLogin from './pages/seller/login/SellerLogin'
@@ -12,15 +12,10 @@ import AllOrders from './pages/seller/allOrders/AllOrders'
 import AllProducts from './pages/seller/allProducts/AllProducts'
 import CreateProduct from './pages/seller/createProduct/CreateProduct'
 import EditProduct from './pages/seller/editProduct/EditProduct'
-import { useSellerVerifyQuery } from './app/services/seller'
 
 function App() {
 
   const loading = useLoadApp()
-  const { isLoading } = useSellerVerifyQuery()
-
-  if (isLoading) return <p>Loading App</p>
-
   return (
     <>
       <BrowserRouter>
@@ -28,46 +23,29 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/products/:prodId' element={<Product />} />
 
-          {/* ========== Seller Unprotected Routes ======== */}
-          <Route exact path='/seller/signup' element={
-            <Unprotected>
-              <SellerSignUp />
-            </Unprotected>}
-          />
-          <Route exact path='/seller/login' element={
-            <Unprotected>
-              <SellerLogin />
-            </Unprotected>}
-          />
-          <Route exact path='/seller/activation/:activationToken' element={
-            <SellerActivation />}
-          />
+          {/* ========== Unprotected Routes ======== */}
+
+          <Route exact path='/auth' >
+            <Route index element={<Navigate to='login' />} />
+            <Route exact path='seller' element={<SellerUnprotected />}>
+              <Route index element={<Navigate to='login' />} />
+              <Route exact path='login' element={<SellerLogin />} />
+              <Route exact path='signup' element={<SellerSignUp />} />
+            </Route>
+          </Route>
+
+          <Route exact path='/seller/activation/:activationToken' element={<SellerActivation />} />
+
           {/* ==========Seller Protected Routes ======== */}
-          <Route exact path='/seller/dashboard' element={
-            <Protected>
-              <SellerDashboard />
-            </Protected>}
-          />
-          <Route exact path='/seller/all-orders' element={
-            <Protected>
-              <AllOrders />
-            </Protected>}
-          />
-          <Route exact path='/seller/all-products' element={
-            <Protected>
-              <AllProducts />
-            </Protected>}
-          />
-          <Route exact path='/seller/create-product' element={
-            <Protected>
-              <CreateProduct />
-            </Protected>}
-          />
-          <Route exact path='/seller/product/edit/:id' element={
-            <Protected>
-              <EditProduct />
-            </Protected>}
-          />
+
+          <Route exact path='/seller' element={<SellerProtected />}>
+            <Route index element={<Navigate to='dashboard' />} />
+            <Route exact path='dashboard' element={<SellerDashboard />} />
+            <Route exact path='all-orders' element={<AllOrders />} />
+            <Route exact path='all-products' element={<AllProducts />} />
+            <Route exact path='create-product' element={<CreateProduct />} />
+            <Route exact path='product/edit/:id' element={<EditProduct />} />
+          </Route>
 
         </Routes>
       </BrowserRouter>

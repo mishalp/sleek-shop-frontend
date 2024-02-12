@@ -1,15 +1,15 @@
-import { useSelector } from "react-redux"
-import { Navigate } from "react-router-dom"
+import { useSellerVerifyQuery } from "@/app/services/seller"
+import { Navigate, Outlet } from "react-router-dom"
 
-function Unprotected({ children }) {
-
-    const { isAuthenticated, loading } = useSelector(state => state.seller)
-
-    if (loading === false) {
-        if (isAuthenticated) {
+function Unprotected() {
+    const { isLoading, isError } = useSellerVerifyQuery()
+    if (isLoading === true) {
+        return <p>loading unprotected</p>
+    } else {
+        if (!isError) {
             return <Navigate to='/seller/dashboard' />
         }
-        return children
+        return <Outlet />
     }
 }
 
