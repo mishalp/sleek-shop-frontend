@@ -1,15 +1,15 @@
 import { useSellerVerifyQuery } from "@/app/services/seller"
-import { Navigate } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
-function Protected({ children }) {
+function Protected() {
     const { isLoading, isError } = useSellerVerifyQuery()
     if (isLoading === true) {
-        return <p>Loading</p>
+        return <p>Loading seller</p>
     } else {
         if (!isError) {
-            return children
+            return <Outlet />
         }
-        return <Navigate to='/seller/login' />
+        return <Navigate to='/auth/seller/login' />
 
     }
 }

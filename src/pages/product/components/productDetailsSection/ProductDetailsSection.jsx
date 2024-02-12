@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import Details from "../details/Details"
 import Display from "../display/Display"
-import { useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useGetProduct from "@/hooks/useGetProduct";
 
 

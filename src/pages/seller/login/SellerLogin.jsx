@@ -6,10 +6,8 @@ import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import FormInput from "@/components/formInput/FormInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSellerLoginMutation } from "@/app/services/seller"
-import { useDispatch } from "react-redux"
-import { sellerFailed, setSeller } from "@/features/seller"
 
 const formSchema = z.object({
     email: z.string({
@@ -26,7 +24,7 @@ const formSchema = z.object({
 function SellerLogin() {
     const { toast } = useToast()
     const [login, { isLoading }] = useSellerLoginMutation()
-    const dispath = useDispatch()
+    const navigate = useNavigate()
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -38,15 +36,13 @@ function SellerLogin() {
 
     async function onSubmit(values) {
         try {
-            const data = await login(values).unwrap()
-            dispath(setSeller(data))
+            await login(values).unwrap()
             toast({
                 title: "Login Success",
                 variant: "success"
             })
-
+            navigate("/seller/dashboard")
         } catch (error) {
-            dispath(sellerFailed())
             console.log(error);
             toast({
                 variant: "destructive",
@@ -68,7 +64,7 @@ function SellerLogin() {
                         </Button>
                     </form>
                 </Form>
-                <p className="text-sm">Not have any account? <Link className="text-blue-500 font-popins" to='/seller/signup'>Sign Up</Link></p>
+                <p className="text-sm">Not have any account? <Link className="text-blue-500 font-popins" to='/auth/seller/signup'>Sign Up</Link></p>
             </div>
         </div>
     )
