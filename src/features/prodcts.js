@@ -3,7 +3,7 @@ import { products } from "../data"
 
 const initialState = {
     loading: true,
-    products: [...products]
+    products: [...products],
 }
 
 const productSlice = createSlice({
@@ -16,9 +16,12 @@ const productSlice = createSlice({
         },
         prodcutsFailed: (state) => {
             state.loading = false
-        }
+        },
     }
 })
 
-export const { setProducts, prodcutsFailed } = productSlice.actions
+export const {
+    setProducts,
+    prodcutsFailed,
+} = productSlice.actions
 export default productSlice

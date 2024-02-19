@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const productApi = createApi({
     reducerPath: 'productApi',
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_SERVER}/product` }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_SERVER}/product`,
+    }),
     tagTypes: ['Products'],
     endpoints: (builder) => ({
         createProduct: builder.mutation({
@@ -12,11 +14,16 @@ export const productApi = createApi({
                 body: info,
                 credentials: 'include'
             }),
-            invalidatesTags: ['Products']
+            invalidatesTags: ['Products', 'ShopProducts']
         }),
         getAllProducts: builder.query({
             query: () => ({
                 url: 'all-prodcuts',
+                providesTags: ({ products }, error, arg) => {
+                    return products
+                        ? [...products.map((item) => ({ type: 'Products', id: item._id }))]
+                        : ['Products']
+                }
             })
         }),
         getShopProdcuts: builder.query({
@@ -25,8 +32,8 @@ export const productApi = createApi({
             }),
             providesTags: ({ products }, error, arg) => {
                 return products
-                    ? [...products.map((item) => ({ type: 'Products', id: item._id }))]
-                    : ['Products']
+                    ? [...products.map((item) => ({ type: 'ShopProducts', id: item._id }))]
+                    : ['ShopProducts']
             }
         }),
         deleteProduct: builder.mutation({
@@ -35,7 +42,7 @@ export const productApi = createApi({
                 method: 'DELETE',
                 credentials: 'include'
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'Products', id: arg }]
+            invalidatesTags: (result, error, arg) => [{ type: 'Products', id: arg }, { type: 'ShopProducts', id: arg }]
         }),
         editProduct: builder.mutation({
             query: (product) => ({
@@ -44,7 +51,7 @@ export const productApi = createApi({
                 body: product.data,
                 credentials: 'include'
             }),
-            invalidatesTags: ['Products']
+            invalidatesTags: (result, error, arg) => [{ type: 'Products', id: arg }, { type: 'ShopProducts', id: arg }]
         })
     })
 })

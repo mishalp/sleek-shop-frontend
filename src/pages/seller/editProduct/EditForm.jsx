@@ -3,7 +3,7 @@ import FormInput from "@/components/formInput/FormInput"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
-import useGetProduct from "@/hooks/useGetProduct"
+import useGetShopProduct from "@/hooks/useGetShopProduct"
 import getFileData from "@/utils/getFileData"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
@@ -71,7 +71,7 @@ function EditForm() {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const product = useGetProduct(id)
+    const product = useGetShopProduct(id)
 
     const form = useForm({
         resolver: zodResolver(formSchema),

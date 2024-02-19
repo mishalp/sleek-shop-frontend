@@ -190,8 +190,8 @@ function DeleteProduct({ id }) {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction disabled={isLoading} onClick={deleteHnadler} >{isLoading ? "deleting..." : "Continue"}</AlertDialogAction>
+                    <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+                    <AlertDialogAction disabled={isLoading} onClick={deleteHnadler} >{isLoading ? "Deleting..." : "Continue"}</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

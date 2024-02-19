@@ -1,11 +1,9 @@
-import { useGetShopProdcutsQuery } from "@/app/services/products"
-import { useSellerVerifyQuery } from "@/app/services/seller"
+import { useGetAllProductsQuery } from "@/app/services/products"
 import { useEffect, useState } from "react"
 
 function useGetProduct(id) {
     const [product, setProduct] = useState(null)
-    const { data: { user } } = useSellerVerifyQuery()
-    const { data, isLoading } = useGetShopProdcutsQuery(user._id)
+    const { data, isLoading } = useGetAllProductsQuery()
 
     useEffect(() => {
         if (!isLoading) {
@@ -15,5 +13,4 @@ function useGetProduct(id) {
 
     return product
 }
-
 export default useGetProduct
