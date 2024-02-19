@@ -2,12 +2,15 @@ import logo from '../../assets/icons/newLogo.svg'
 import shope from '../../assets/icons/shope.svg'
 import SearchInput from '../searchInput/SearchInput'
 import heart from '../../assets/icons/heart.svg'
-import cart from '../../assets/icons/cart.svg'
+import cartImg from '../../assets/icons/cart.svg'
 import profile from '../../assets/icons/profile.svg'
 import menu from '../../assets/icons/menu.svg'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSellerVerifyQuery } from '@/app/services/seller'
+import { useUserVerifyQuery } from '@/app/services/user'
+import { CircleUserRound, ShoppingCart } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const links = [
     {
@@ -41,7 +44,7 @@ const iconLinks = [
     },
     {
         name: "Cart",
-        icon: cart
+        icon: cartImg
     },
     {
         name: "Profile",
@@ -53,6 +56,8 @@ function Header() {
 
     const [show, setShow] = useState(false)
     const { isLoading, isError } = useSellerVerifyQuery()
+    const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
+    const cart = useSelector(state => state.cart.cart)
 
     return (
         <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
@@ -71,14 +76,24 @@ function Header() {
             </div>
 
             <div className="flex gap-6 justify-end">
-                <Link to={!isError && !isLoading ? "/seller/dashboard" : "/seller/login"} className='gap-2 items-center hidden sm:flex'>
+                <Link to={!isError && !isLoading ? "/seller/dashboard" : "/auth/seller/login"} className='gap-2 items-center hidden sm:flex'>
                     <img src={shope} className='w-[1.5rem]' alt="" />
                     <p className='font-popins font-medium' >{!isError && !isLoading ? "Seller Dashboard" : "Become a Seller"}</p>
                 </Link>
-                <div className='flex gap-4'>
+                <div className='flex gap-6'>
                     <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" />
-                    <img src={cart} className={`w-[1.5rem] ${show && 'hidden'} sm:flex`} alt="" />
-                    <img src={profile} className='w-[1.5rem] hidden sm:flex' alt="" />
+                    <div className={`${show && 'hidden'} sm:flex relative items-center`}>
+                        <ShoppingCart strokeWidth={1.5} size={28} />
+                        {cart?.length > 0 &&
+                            <div className="absolute -top-0 -right-2 bg-red-500 min-w-5 p-[2.5px] flex items-center justify-center min-h-5 aspect-square rounded-full">
+                                <p className='text-sm'>{cart?.length < 100 ? cart?.length : "99+"}</p>
+                            </div>}
+                    </div>
+                    {!userLoading && !userError ?
+                        <img src={data.user.avatar.url} className='w-[2.5rem] h-auto aspect-square object-cover rounded-full hidden sm:flex' alt="" />
+                        :
+                        <CircleUserRound size={32} strokeWidth={1.5} className="hidden sm:flex" />
+                    }
                 </div>
             </div>
             {/* toggle menu */}

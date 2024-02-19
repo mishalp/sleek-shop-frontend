@@ -12,6 +12,9 @@ import AllOrders from './pages/seller/allOrders/AllOrders'
 import AllProducts from './pages/seller/allProducts/AllProducts'
 import CreateProduct from './pages/seller/createProduct/CreateProduct'
 import EditProduct from './pages/seller/editProduct/EditProduct'
+import UserLogin from './pages/user/login/UserLogin'
+import UserSignUp from './pages/user/signUp/UserSignUp'
+import UserActivation from './pages/user/activation/UserActivation'
 
 function App() {
 
@@ -32,9 +35,15 @@ function App() {
               <Route exact path='login' element={<SellerLogin />} />
               <Route exact path='signup' element={<SellerSignUp />} />
             </Route>
+            <Route exact path='user'>
+              <Route index element={<Navigate to='login' />} />
+              <Route exact path='login' element={<UserLogin />} />
+              <Route exact path='signup' element={<UserSignUp />} />
+            </Route>
           </Route>
 
           <Route exact path='/seller/activation/:activationToken' element={<SellerActivation />} />
+          <Route exact path='/user/activation/:activationToken' element={<UserActivation />} />
 
           {/* ==========Seller Protected Routes ======== */}
 

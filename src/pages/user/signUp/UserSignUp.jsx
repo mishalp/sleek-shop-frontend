@@ -1,7 +1,6 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import validator from "validator";
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
@@ -10,7 +9,7 @@ import { useState } from "react";
 import getFileData from "@/utils/getFileData";
 import FormInput from "@/components/formInput/FormInput";
 import { Link } from "react-router-dom";
-import { useSellerRegisterMutation } from "@/app/services/seller";
+import { useUserRegisterMutation } from "@/app/services/user";
 
 const formSchema = z.object({
     name: z.string({
@@ -20,24 +19,10 @@ const formSchema = z.object({
     }).max(20, {
         message: "Shope name must be at most 20 characters"
     }),
-    phone: z.string()
-        .min(10, {
-            message: "Phone must be at least 10 numbers."
-        }).refine((val) => validator.isMobilePhone(val, 'en-IN'), {
-            message: "Phone must be numeric"
-        }),
     email: z.string({
         required_error: "Email is required"
     }).trim().email({
         message: "Enter a valid Email"
-    }),
-    address: z.string().min(3, {
-        message: "Adress must be at least 3 characters"
-    }),
-    zip: z.string().min(6, {
-        message: "Zip code must be at least 6 numbers"
-    }).refine(validator.isNumeric, {
-        message: "Zip code must be numeric"
     }),
     password: z.string().min(6, {
         message: "Password must be at least 6 characters"
@@ -53,20 +38,17 @@ const formSchema = z.object({
 })
 
 
-function SellerSignUp() {
+function UserSignUp() {
 
     const [loading, setLoading] = useState(false)
     const { toast } = useToast()
-    const [register] = useSellerRegisterMutation()
+    const [register] = useUserRegisterMutation()
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            phone: "",
             email: "",
-            address: "",
-            zip: "",
             password: "",
             avatar: "",
         },
@@ -92,7 +74,8 @@ function SellerSignUp() {
             console.log(error);
             toast({
                 variant: "destructive",
-                title: error.data.message,
+                title: "Sign Up Error",
+                description: error.data.message,
             })
         } finally {
             setLoading(false)
@@ -101,15 +84,12 @@ function SellerSignUp() {
 
     return (
         <div className="w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
-            <h2 className="text-2xl font-bold font-popins my-8">Register as a Seller</h2>
+            <h2 className="text-2xl font-bold font-popins my-8">Register User</h2>
             <div className="bg-white p-6 lg:min-w-[34rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
-                        <FormInput form={form} name="name" label="Shop name" />
-                        <FormInput form={form} name="phone" label="Phone" />
+                        <FormInput form={form} name="name" label="Name" />
                         <FormInput form={form} name="email" label="Email" type="email" />
-                        <FormInput form={form} name="address" label="Address" />
-                        <FormInput form={form} name="zip" label="Zip code" />
                         <FormInput form={form} name="password" label="Password" type="password" />
                         <FormInput form={form} name="avatar" label="Avatar" type="image" />
 
@@ -118,10 +98,10 @@ function SellerSignUp() {
                         </Button>
                     </form>
                 </Form>
-                <p className="text-sm">Already have an account? <Link className="text-blue-500 font-popins" to='/auth/seller/login'>Log in</Link></p>
+                <p className="text-sm">Already have an account? <Link className="text-blue-500 font-popins" to='/auth/user/login'>Log in</Link></p>
             </div>
         </div>
     )
 }
 
-export default SellerSignUp
+export default UserSignUp
