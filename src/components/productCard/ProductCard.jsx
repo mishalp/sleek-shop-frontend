@@ -69,9 +69,9 @@ function ProductCard({ item, id }) {
             <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
                 <img src={item.images[0].url} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" />
                 <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden group-hover:flex items-center justify-center">
-                    <button className="p-2 bg-white cursor-pointer flex items-center justify-center rounded-full shadow-md" >
+                    {/* <button className="p-2 bg-white cursor-pointer flex items-center justify-center rounded-full shadow-md" >
                         <Heart />
-                    </button>
+                    </button> */}
                     {/* <div className="p-2 group/cart bg-white duration-200 flex items-center cursor-pointer justify-center rounded-full shadow-md" onClick={isCartLoading ? isInCart != -1 ? removeCartItem : addCartItem : ""}>
                         <ShoppingCart color={isInCart != -1 ? '#00f' : '#000'} className='group-active/cart:scale-75 duration-100' fill={isInCart != -1 ? '#00f' : '#fff'} />
                     </div> */}

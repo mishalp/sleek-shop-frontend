@@ -15,6 +15,7 @@ import EditProduct from './pages/seller/editProduct/EditProduct'
 import UserLogin from './pages/user/login/UserLogin'
 import UserSignUp from './pages/user/signUp/UserSignUp'
 import UserActivation from './pages/user/activation/UserActivation'
+import Search from './pages/search/Search'
 
 function App() {
 
@@ -23,8 +24,10 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* ========== User Routes ============ */}
           <Route exact path='/' element={<Home />} />
           <Route exact path='/products/:prodId' element={<Product />} />
+          <Route exact path='/search/:search' element={<Search />} />
 
           {/* ========== Unprotected Routes ======== */}
 

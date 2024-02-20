@@ -6,7 +6,7 @@ import cartImg from '../../assets/icons/cart.svg'
 import profile from '../../assets/icons/profile.svg'
 import menu from '../../assets/icons/menu.svg'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSellerVerifyQuery } from '@/app/services/seller'
 import { useUserVerifyQuery } from '@/app/services/user'
 import { CircleUserRound, ShoppingCart } from 'lucide-react'
@@ -38,10 +38,10 @@ const iconLinks = [
         styles: 'sm:hidden',
         link: '/seller/login'
     },
-    {
-        name: "Whishlist",
-        icon: heart,
-    },
+    // {
+    //     name: "Whishlist",
+    //     icon: heart,
+    // },
     {
         name: "Cart",
         icon: cartImg
@@ -58,6 +58,11 @@ function Header() {
     const { isLoading, isError } = useSellerVerifyQuery()
     const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
     const cart = useSelector(state => state.cart.cart)
+    const navigate = useNavigate()
+
+    function getResult(value) {
+        navigate(`/search/${value}`)
+    }
 
     return (
         <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
@@ -66,7 +71,7 @@ function Header() {
                 <Link to='/'>
                     <img src={logo} className='w-28' alt="" />
                 </Link>
-                <SearchInput className='hidden xl:flex' />
+                <SearchInput getResult={getResult} className='hidden xl:flex' />
             </div>
 
             <div className="gap-6 items-center justify-self-center hidden lg:flex">
@@ -81,7 +86,7 @@ function Header() {
                     <p className='font-popins font-medium' >{!isError && !isLoading ? "Seller Dashboard" : "Become a Seller"}</p>
                 </Link>
                 <div className='flex gap-6'>
-                    <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" />
+                    {/* <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" /> */}
                     <div className={`${show && 'hidden'} sm:flex relative items-center`}>
                         <ShoppingCart strokeWidth={1.5} size={28} />
                         {cart?.length > 0 &&
@@ -98,7 +103,7 @@ function Header() {
             </div>
             {/* toggle menu */}
             <div className={`grid grid-col-1 row-start-2 col-span-full gap-4 transition-all duration-300 ease-in xl:hidden ${!show ? 'max-h-0 max-w-0 overflow-hidden pt-0' : 'max-h-[30rem] pt-8'}`}>
-                <SearchInput className="w-ful" />
+                <SearchInput getResult={getResult} className="w-ful" />
                 <div className='flex flex-col sm:hidden gap-4 justify-between sm:justify-start w-full'>
                     {iconLinks.map(item => (
                         <div key={item.name} className={`flex gap-4 ${item?.styles}`}>
