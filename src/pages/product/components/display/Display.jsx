@@ -1,21 +1,24 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Button from "../../../../components/button/MyButton"
+import { useDispatch, useSelector } from "react-redux"
+import { useAddCartProductMutation, useRemoveCartProductMutation } from "@/app/services/cart"
+import { useToast } from "@/components/ui/use-toast"
+import { useUserVerifyQuery } from "@/app/services/user"
+import { addToCart, removeFromCart } from "@/features/cart"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
-function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
+function Display({ images, prodId, canvas, zoomImg, current, setCurrent }) {
     const lens = useRef()
     const image = useRef()
     const display = useRef()
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.cart)
+    let isInCart = cart.cart.findIndex(item => item.id === prodId)
+    const { toast } = useToast()
 
-    const [states, setStats] = useState({
-        clientX: "",
-        clientY: "",
-        layerX: "",
-        layerY: "",
-        offsetX: "",
-        offsetY: "",
-        x: "",
-        y: ""
-    })
+    const [addCartProduct, { isLoading: addCartLoading }] = useAddCartProductMutation()
+    const [removeCartProduct, { isLoading: removeCartLoading }] = useRemoveCartProductMutation()
+    const { isError: userError, isLoading } = useUserVerifyQuery()
 
     useEffect(() => {
         const trackLense = (e) => {
@@ -23,54 +26,66 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
             canvas.current.style.display = "flex";
             let width = image.current.offsetWidth
             let height = image.current.offsetHeight
-            console.log(e);
             let offset = image.current.getBoundingClientRect()
-            console.log(offset);
-            setStats({
-                clientX: e.clientX,
-                clientY: e.clientY,
-                layerX: e.layerX,
-                layerY: e.layerY,
-                offsetX: e.offsetX,
-                offsetY: e.offsetY,
-                offsetWidth: e.target.offsetWidth,
-                offsetHeight: e.target.offsetHeight,
-                imgPosX: (e.layerX) / width * 100,
-                imgPosY: e.layerY / height * 100,
-                x: e.clientX - offset.left,
-                y: e.clientY - offset.top
-
-            })
-            console.log(image.current.offsetWidth);
-            console.log(image.current.offsetHeight);
 
             lens.current.style.transform = `translate(${e.clientX - offset.left - (lens.current.offsetWidth / 2)}px, ${e.clientY - offset.top - (lens.current.offsetHeight / 2)}px)`
-            // lens.current.style.left = `${e.clientX}px`
-            // lens.current.style.top = `${e.clientY}px`
+
             let posX = (e.clientX - offset.left) / width * 100
             let posY = (e.clientY - offset.top) / height * 100
-            console.log(posX, posY);
             zoomImg.current.style.transform = `translate(-${posX * 2.2 - 17}%, -${posY * 2.2 - 17}%) scale(3)`
-            // zoomImg.current.style.objectPosition = `${posX}% ${posY}%`
-            // canvas.current.style.backgroundPosition = `-${e.layerX * 2}px -${e.layerY * 2}px`
-
 
         }
         if (image && image.current && lens && lens.current) {
-            let width = image.current.offsetWidth
-            let height = image.current.offsetHeight
+
             lens.current.style.width = '35%'
             image.current.addEventListener("mousemove", trackLense)
-            // canvas.current.style.width = width + 'px'
 
-            // canvas.current.style.height = display.current.offsetHeight + 'px'
-            // canvas.current.style.backgroundImage = `url('${images[current]}')`
             image.current.addEventListener("mouseleave", () => { lens.current.style.display = "none"; canvas.current.style.display = "none" })
         }
         return () => {
             if (image.current) image.current.removeEventListener("mousemove", trackLense)
         }
     }, [image, lens])
+
+    const addCartItem = async () => {
+        try {
+            if (!userError) {
+                await addCartProduct(prodId)
+            }
+            dispatch(addToCart({ id: prodId, user: userError ? false : true }))
+            toast({
+                title: "Added To Cart",
+                variant: "success"
+            })
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: "destructive",
+                title: error.data.message,
+            })
+        }
+    }
+
+    const removeCartItem = async () => {
+        try {
+            if (!userError) {
+                await removeCartProduct(prodId)
+            }
+            dispatch(removeFromCart({ id: prodId, user: userError ? false : true }))
+            toast({
+                title: "Removed from Cart",
+                variant: "success"
+            })
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: "destructive",
+                title: error.data.message,
+            })
+        }
+    }
+
+    if (isLoading) return <p>loading</p>
 
     return (
         <div ref={display} className="p-3 flex gap-3 w-full sticky top-[100px] h-fit">
@@ -87,7 +102,10 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
                     </div>
                 </div>
                 <div className="flex gap-4 justify-center">
-                    <Button title="Add to Cart" className='min-w-12 !rounded' />
+                    <Button disabled={addCartLoading || removeCartLoading} onClick={isInCart != -1 ? removeCartItem : addCartItem} className='min-w-12 !rounded flex items-center' >
+                        {(addCartLoading || removeCartLoading) && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                        {isInCart != -1 ? "Remove from cart" : "Add to Cart"}
+                    </Button>
                     <Button title="Buy Now" primary className='min-w-44 !rounded' />
                 </div>
             </div>

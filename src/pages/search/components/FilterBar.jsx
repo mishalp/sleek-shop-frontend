@@ -1,6 +1,4 @@
 import { Separator } from "@/components/ui/separator"
-import { useEffect, useState } from "react"
-import useMinmax from "@/hooks/useMinmax"
 import { CheckboxWithText } from "./CheckboxWithText"
 import FilterMenu from "./Filter"
 import Sort from "./Sort"
@@ -44,35 +42,25 @@ const discount = [
     },
 ]
 
-function FilterBar({ setFilteredProducts, products, filteredProducts, setProducts }) {
-
-    const [loading, setLoading] = useState(true)
-    const { minmaxValues, minmax, setMinmax } = useMinmax(filteredProducts, loading)
-
-    useEffect(() => {
-        if (minmax.max != 0) {
-            setLoading(false)
-            setFilteredProducts(products.filter(item => item.price >= minmax.min && item.price <= minmax.max))
-        }
-    }, [minmax])
+function FilterBar({ minmax, minmaxValues, sortValue, setSortValue, setFilters, filters }) {
 
     return (
         <div className=" bg-white shadow-md py-2 flex flex-col min-w-60  h-fit">
             <h2 className="p-3 font-semibold text-xl">Filters</h2>
             <Separator />
             <FilterMenu title="Sort By">
-                {filteredProducts && filteredProducts[0]?.price &&
-                    <Sort
-                        setFilteredProducts={setFilteredProducts}
-                        setProducts={setProducts}
-                    />}
+                <Sort
+                    sortValue={sortValue}
+                    setSortValue={setSortValue}
+                />
             </FilterMenu>
             <Separator />
             <FilterMenu title="Price">
                 <Minmax
                     minmax={minmax}
                     minmaxValues={minmaxValues}
-                    setMinmax={setMinmax}
+                    setFilters={setFilters}
+                    filters={filters}
                 />
             </FilterMenu>
             <Separator />
