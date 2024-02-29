@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-function useMinmax(products, loading) {
+function useMinmax() {
     const [minmaxValues, setMinmaxValues] = useState([])
     const [minmax, setMinmax] = useState({ min: 0, max: 0 })
+    const [loading, setLoading] = useState(true)
 
-
-    console.log(products);
-    useEffect(() => {
-
-        if (products && products[0] && loading) {
+    const getMinmax = (products) => {
+        setLoading(true)
+        if (products && products[0] && products.length > 1) {
             let min = products.reduce((min, p) => p.price < min ? p.price : min, products[0].price)
             let max = products.reduce((max, p) => p.price > max ? p.price : max, products[0].price)
             let diff = max - min
@@ -30,11 +29,13 @@ function useMinmax(products, loading) {
                 min: 0,
                 max: temp[temp.length - 1]
             }
+            console.log(value);
             setMinmax(value)
         }
-    }, [products])
+        setLoading(false)
+    }
 
-    return { minmaxValues, minmax, setMinmax }
+    return [getMinmax, { minmaxValues, minmax, setMinmax, loading }]
 }
 
 export default useMinmax

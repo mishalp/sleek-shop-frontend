@@ -8,6 +8,7 @@ import { useUserVerifyQuery } from '@/app/services/user'
 import { useAddCartProductMutation, useRemoveCartProductMutation } from '@/app/services/cart'
 import { useToast } from '../ui/use-toast'
 import { Button } from '../ui/button'
+import ImageLoader from '../imageLoader/ImageLoader'
 
 function ProductCard({ item, id }) {
 
@@ -18,7 +19,7 @@ function ProductCard({ item, id }) {
     const cart = useSelector(state => state.cart.cart)
     const [addCartProduct, { isLoading: addCartLoading }] = useAddCartProductMutation()
     const [removeCartProduct, { isLoading: removeCartLoading }] = useRemoveCartProductMutation()
-    console.log(cart);
+
     let isInCart = cart?.findIndex(item => item.id === id)
 
     const handleClick = (e) => {
@@ -67,14 +68,12 @@ function ProductCard({ item, id }) {
     return (
         <Link to={`/products/${id}`} onClick={handleClick} className="relative min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded-sm overflow-hidden">
             <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
-                <img src={item.images[0].url} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" />
+                {/* <img src={item.images[0].url} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" /> */}
+                <ImageLoader className="aspect-square object-contain group-hover:scale-[1.1] duration-200" src={item.images[0].url} />
                 <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden group-hover:flex items-center justify-center">
                     {/* <button className="p-2 bg-white cursor-pointer flex items-center justify-center rounded-full shadow-md" >
                         <Heart />
                     </button> */}
-                    {/* <div className="p-2 group/cart bg-white duration-200 flex items-center cursor-pointer justify-center rounded-full shadow-md" onClick={isCartLoading ? isInCart != -1 ? removeCartItem : addCartItem : ""}>
-                        <ShoppingCart color={isInCart != -1 ? '#00f' : '#000'} className='group-active/cart:scale-75 duration-100' fill={isInCart != -1 ? '#00f' : '#fff'} />
-                    </div> */}
                     <Button className="p-2 group/cart bg-white hover:bg-white duration-200 flex items-center cursor-pointer justify-center rounded-full shadow-md" disabled={addCartLoading || removeCartLoading} onClick={!addCartLoading && !removeCartLoading ? isInCart != -1 ? removeCartItem : addCartItem : null}>
                         <ShoppingCart color={isInCart != -1 ? '#00f' : '#000'} className='group-active/cart:scale-75 duration-100' fill={isInCart != -1 ? '#00f' : '#fff'} />
                     </Button>

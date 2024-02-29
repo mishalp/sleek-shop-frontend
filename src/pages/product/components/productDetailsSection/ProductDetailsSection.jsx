@@ -18,7 +18,7 @@ function ProductDetailsSection() {
 
     return (
         <div className="p-3 grid lg:grid-cols-2 pt-24 min-h-screen">
-            <Display product={product.info} current={current} setCurrent={setCurrent} images={product.images} zoomImg={zoomImg} canvas={canvas} />
+            <Display prodId={prodId} current={current} setCurrent={setCurrent} images={product.images} zoomImg={zoomImg} canvas={canvas} />
             <Details canvas={canvas} current={current} zoomImg={zoomImg} product={product} />
         </div>
     )

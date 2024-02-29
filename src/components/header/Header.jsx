@@ -97,7 +97,8 @@ function Header() {
                     {!userLoading && !userError ?
                         <img src={data.user.avatar.url} className='w-[2.5rem] h-auto aspect-square object-cover rounded-full hidden sm:flex' alt="" />
                         :
-                        <CircleUserRound size={32} strokeWidth={1.5} className="hidden sm:flex" />
+                        // <CircleUserRound size={32} strokeWidth={1.5} className="hidden sm:flex" />
+                        <Link to='/auth/user/login' className='px-2 py-1 font-medium border-myprimary border-2 hover:bg-mysecondary hover:text-myprimary duration-200 rounded bg-myprimary text-mysecondary'>Log In</Link>
                     }
                 </div>
             </div>
