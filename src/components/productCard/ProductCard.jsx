@@ -20,7 +20,8 @@ function ProductCard({ item, id }) {
     const [addCartProduct, { isLoading: addCartLoading }] = useAddCartProductMutation()
     const [removeCartProduct, { isLoading: removeCartLoading }] = useRemoveCartProductMutation()
 
-    let isInCart = cart?.findIndex(item => item.id === id)
+    let isInCart = cart?.findIndex(item => item.item._id === id)
+    console.log(cart[0]);
 
     const handleClick = (e) => {
         if (ref.current.contains(e.target))
@@ -32,7 +33,7 @@ function ProductCard({ item, id }) {
             if (!userError) {
                 await addCartProduct(id)
             }
-            dispatch(addToCart({ id, user: userError ? false : true }))
+            dispatch(addToCart({ item, user: userError ? false : true }))
             toast({
                 title: "Added To Cart",
                 variant: "success"
