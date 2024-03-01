@@ -7,13 +7,13 @@ import { useUserVerifyQuery } from "@/app/services/user"
 import { addToCart, removeFromCart } from "@/features/cart"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-function Display({ images, prodId, canvas, zoomImg, current, setCurrent }) {
+function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
     const lens = useRef()
     const image = useRef()
     const display = useRef()
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
-    let isInCart = cart.cart.findIndex(item => item.id === prodId)
+    let isInCart = cart.cart.findIndex(item => item.item._id === product._id)
     const { toast } = useToast()
 
     const [addCartProduct, { isLoading: addCartLoading }] = useAddCartProductMutation()
@@ -50,9 +50,9 @@ function Display({ images, prodId, canvas, zoomImg, current, setCurrent }) {
     const addCartItem = async () => {
         try {
             if (!userError) {
-                await addCartProduct(prodId)
+                await addCartProduct(product._id)
             }
-            dispatch(addToCart({ id: prodId, user: userError ? false : true }))
+            dispatch(addToCart({ item: product, user: userError ? false : true }))
             toast({
                 title: "Added To Cart",
                 variant: "success"
@@ -69,9 +69,9 @@ function Display({ images, prodId, canvas, zoomImg, current, setCurrent }) {
     const removeCartItem = async () => {
         try {
             if (!userError) {
-                await removeCartProduct(prodId)
+                await removeCartProduct(product._id)
             }
-            dispatch(removeFromCart({ id: prodId, user: userError ? false : true }))
+            dispatch(removeFromCart({ id: product._id, user: userError ? false : true }))
             toast({
                 title: "Removed from Cart",
                 variant: "success"

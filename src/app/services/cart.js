@@ -66,6 +66,22 @@ export const cartApi = createApi({
                 credentials: 'include'
             })
         }),
+        incrementProdCount: builder.mutation({
+            query: (id) => ({
+                url: `increment`,
+                method: 'PATCH',
+                body: { id },
+                credentials: 'include'
+            })
+        }),
+        decrementProdCount: builder.mutation({
+            query: (id) => ({
+                url: `decrement`,
+                method: 'PATCH',
+                body: { id },
+                credentials: 'include'
+            })
+        }),
 
     })
 })
@@ -76,5 +92,7 @@ export const {
     useDecrementCartMutation,
     useAddCartProductMutation,
     useRemoveCartProductMutation,
+    useIncrementProdCountMutation,
+    useDecrementProdCountMutation,
     useGetCartQuery,
 } = cartApi

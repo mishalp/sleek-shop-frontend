@@ -9,8 +9,18 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSellerVerifyQuery } from '@/app/services/seller'
 import { useUserVerifyQuery } from '@/app/services/user'
-import { CircleUserRound, ShoppingCart } from 'lucide-react'
+import { ShoppingCart } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { Separator } from '../ui/separator'
+import Cart from '../cart/Cart'
+
 
 const links = [
     {
@@ -79,29 +89,40 @@ function Header() {
                     <a key={key} href={item.link} className='font-popins font-medium' >{item.text}</a>
                 ))}
             </div>
-
-            <div className="flex gap-6 justify-end">
-                <Link to={!isError && !isLoading ? "/seller/dashboard" : "/auth/seller/login"} className='gap-2 items-center hidden sm:flex'>
-                    <img src={shope} className='w-[1.5rem]' alt="" />
-                    <p className='font-popins font-medium' >{!isError && !isLoading ? "Seller Dashboard" : "Become a Seller"}</p>
-                </Link>
-                <div className='flex gap-6'>
-                    {/* <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" /> */}
-                    <div className={`${show && 'hidden'} sm:flex relative items-center`}>
-                        <ShoppingCart strokeWidth={1.5} size={28} />
-                        {cart?.length > 0 &&
-                            <div className="absolute -top-0 -right-2 bg-red-500 min-w-5 p-[2.5px] flex items-center justify-center min-h-5 aspect-square rounded-full">
-                                <p className='text-sm'>{cart?.length < 100 ? cart?.length : "99+"}</p>
-                            </div>}
+            <Sheet >
+                <div className="flex gap-6 justify-end">
+                    <Link to={!isError && !isLoading ? "/seller/dashboard" : "/auth/seller/login"} className='gap-2 items-center hidden sm:flex'>
+                        <img src={shope} className='w-[1.5rem]' alt="" />
+                        <p className='font-popins font-medium' >{!isError && !isLoading ? "Seller Dashboard" : "Become a Seller"}</p>
+                    </Link>
+                    <div className='flex gap-6'>
+                        {/* <img src={heart} className='w-[1.5rem] hidden sm:flex' alt="" /> */}
+                        <SheetTrigger className={`${show && 'hidden'} sm:flex relative items-center`}>
+                            <ShoppingCart strokeWidth={1.5} size={28} />
+                            {cart?.length > 0 &&
+                                <div className="absolute -top-0 -right-2 bg-red-500 min-w-5 p-[2.5px] flex items-center justify-center min-h-5 aspect-square rounded-full">
+                                    <p className='text-sm'>{cart?.length < 100 ? cart?.length : "99+"}</p>
+                                </div>}
+                        </SheetTrigger>
+                        {!userLoading && !userError ?
+                            <img src={data.user.avatar.url} className='w-[2.5rem] h-auto aspect-square object-cover rounded-full hidden sm:flex' alt="" />
+                            :
+                            // <CircleUserRound size={32} strokeWidth={1.5} className="hidden sm:flex" />
+                            <Link to='/auth/user/login' className='px-2 py-1 font-medium border-myprimary border-2 hover:bg-mysecondary hover:text-myprimary duration-200 rounded bg-myprimary text-mysecondary'>Log In</Link>
+                        }
                     </div>
-                    {!userLoading && !userError ?
-                        <img src={data.user.avatar.url} className='w-[2.5rem] h-auto aspect-square object-cover rounded-full hidden sm:flex' alt="" />
-                        :
-                        // <CircleUserRound size={32} strokeWidth={1.5} className="hidden sm:flex" />
-                        <Link to='/auth/user/login' className='px-2 py-1 font-medium border-myprimary border-2 hover:bg-mysecondary hover:text-myprimary duration-200 rounded bg-myprimary text-mysecondary'>Log In</Link>
-                    }
                 </div>
-            </div>
+
+                {/* <SheetTrigger>Open</SheetTrigger> */}
+                <SheetContent className='p-0 pb-40 border-l-0 bg-myprimary'>
+                    <SheetHeader className="p-4">
+                        <SheetTitle className="flex gap-2"><ShoppingCart strokeWidth={1.5} size={28} /> My Cart</SheetTitle>
+                        <Separator />
+                    </SheetHeader>
+                    <Cart />
+                </SheetContent>
+            </Sheet>
+
             {/* toggle menu */}
             <div className={`grid grid-col-1 row-start-2 col-span-full gap-4 transition-all duration-300 ease-in xl:hidden ${!show ? 'max-h-0 max-w-0 overflow-hidden pt-0' : 'max-h-[30rem] pt-8'}`}>
                 <SearchInput getResult={getResult} className="w-ful" />
@@ -119,7 +140,7 @@ function Header() {
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

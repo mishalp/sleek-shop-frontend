@@ -18,7 +18,7 @@ function Search() {
         setFilters,
         filters
     } = useFilter(data, isLoading, isError, search)
-
+    console.log(filtered);
     return (
         <div className='w-screen max-w-full bg-myprimary'>
             <Header />

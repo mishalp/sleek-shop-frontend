@@ -23,7 +23,7 @@ function useFilter(data, isLoading, isError, search) {
                 if (item.description.toUpperCase().includes(search.toUpperCase())) return pr3.push(item)
             })
             const products = [...pr1, ...pr2, ...pr3]
-
+            console.log(products);
             setSearched(products)
             setFiltered(sort(sortValue, products))
             setFilters({
@@ -60,9 +60,10 @@ function useFilter(data, isLoading, isError, search) {
     }
 
     function getMinmax(products) {
-        if (products && products[0] && products.length > 1) {
-            let min = products.reduce((min, p) => p.price < min ? p.price : min, products[0].price)
+        if (products && products[0] && products.length > 0) {
+            let min = 0
             let max = products.reduce((max, p) => p.price > max ? p.price : max, products[0].price)
+
             let diff = max - min
             let step = String(parseInt(diff / 3))
             step = step.split("")

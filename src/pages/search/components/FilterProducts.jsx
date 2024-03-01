@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 
 function FilterProducts({ products }) {
     const { search } = useParams()
-
+    console.log(products);
     return (
         <div className="bg-white shadow-md min-h-[90vh] p-3 flex flex-col gap-1">
             <h2 className="font-popins font-semibold text-xl">Showing results for "{search}”</h2>
