@@ -2,9 +2,10 @@ import ProductCard from "../../../../components/productCard/ProductCard"
 import { useGetAllProductsQuery } from "@/app/services/products"
 
 function BestSellingSection() {
-    const { data, isLoading } = useGetAllProductsQuery()
+    const { data, isLoading, isError } = useGetAllProductsQuery()
 
     if (isLoading) return <p>Loading</p>
+    if (isError) return <p>Something went wrong</p>
 
     return (
         <div className="py-6 lg:p-6 flex flex-col gap-6">

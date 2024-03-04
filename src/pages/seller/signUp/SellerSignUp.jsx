@@ -24,7 +24,7 @@ const formSchema = z.object({
         .min(10, {
             message: "Phone must be at least 10 numbers."
         }).refine((val) => validator.isMobilePhone(val, 'en-IN'), {
-            message: "Phone must be numeric"
+            message: "Phone must be valid"
         }),
     email: z.string({
         required_error: "Email is required"

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/home/Home'
 import SellerUnprotected from './routes/seller/Unprotected'
 import SellerProtected from './routes/seller/Protected'
@@ -16,18 +16,24 @@ import UserLogin from './pages/user/login/UserLogin'
 import UserSignUp from './pages/user/signUp/UserSignUp'
 import UserActivation from './pages/user/activation/UserActivation'
 import Search from './pages/search/Search'
+import Checkout from './pages/checkout/Checkout'
+import Payment from './pages/payment/Payment'
+import useScrollToTop from './hooks/useScrollToTop'
 
 function App() {
 
   const loading = useLoadApp()
+  useScrollToTop()
   return (
     <>
-      <BrowserRouter>
-        <Routes>
+      <BrowserRouter >
+        <Routes >
           {/* ========== User Routes ============ */}
           <Route exact path='/' element={<Home />} />
           <Route exact path='/products/:prodId' element={<Product />} />
           <Route exact path='/search/:search' element={<Search />} />
+          <Route exact path='/checkout' element={<Checkout />} />
+          <Route exact path='/payment' element={<Payment />} />
 
           {/* ========== Unprotected Routes ======== */}
 

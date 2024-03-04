@@ -6,7 +6,7 @@ import cartImg from '../../assets/icons/cart.svg'
 import profile from '../../assets/icons/profile.svg'
 import menu from '../../assets/icons/menu.svg'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSellerVerifyQuery } from '@/app/services/seller'
 import { useUserVerifyQuery } from '@/app/services/user'
 import { ShoppingCart } from 'lucide-react'
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sheet"
 import { Separator } from '../ui/separator'
 import Cart from '../cart/Cart'
+import useScrollToTop from '@/hooks/useScrollToTop'
 
 
 const links = [
@@ -63,7 +64,8 @@ const iconLinks = [
 ]
 
 function Header() {
-
+    const location = useLocation()
+    useScrollToTop(location.pathname)
     const [show, setShow] = useState(false)
     const { isLoading, isError } = useSellerVerifyQuery()
     const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
