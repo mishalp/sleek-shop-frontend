@@ -102,7 +102,7 @@ function SelectInput({ form, name, label, list }) {
                     </FormControl>
                     <SelectContent>
                         {list.map((item, i) => (
-                            <SelectItem key={i} value={item}>{item}</SelectItem>
+                            <SelectItem key={i} value={item.value ? item.value : item}>{item.name ? item.name : item}</SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
