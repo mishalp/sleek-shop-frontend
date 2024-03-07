@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/tooltip"
 import { useUserVerifyQuery } from '@/app/services/user'
 import { useDecrementCartMutation, useIncrementCartMutation, useRemoveCartProductMutation } from '@/app/services/cart'
-import { decrementCount, incrementCount, removeFromCart } from '@/features/cart'
+import { decrementCount, incrementCount, removeFromCart } from '@/app/features/cart'
 import { useToast } from '../ui/use-toast'
 import { useDispatch } from "react-redux"
 import { formatPrice } from "@/utils/utils"

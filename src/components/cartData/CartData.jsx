@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 export function CartData() {
     const cart = useSelector(state => state.cart.cart)
-    let subTotal = cart.reduce((total, prod) => total + (prod.item.price * prod.count), 0)
+    let subTotal = cart?.reduce((total, prod) => total + (prod.item.price * prod.count), 0)
     let shipping = 60
     let discount = 0
     let total = subTotal + shipping

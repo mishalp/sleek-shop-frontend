@@ -1,7 +1,7 @@
 import { useGetCartQuery } from '@/app/services/cart'
 import { useGetAllProductsQuery } from '@/app/services/products'
-import { setCart } from '@/features/cart'
-import { prodcutsFailed, setProducts } from '@/features/prodcts'
+import { setCart } from '@/app/features/cart'
+import { prodcutsFailed, setProducts } from '@/app/features/prodcts'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -28,7 +28,7 @@ function useLoadApp() {
             } else {
                 let cart = JSON.parse(localStorage.getItem('cart')) || []
                 console.log(cart);
-                dispath(setCart({ cart: cart, user: false }))
+                dispath(setCart({ cart: cart.cart || [], user: false }))
             }
         }
     }, [cartLoading])

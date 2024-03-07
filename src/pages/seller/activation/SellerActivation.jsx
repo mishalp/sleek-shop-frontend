@@ -1,4 +1,4 @@
-import { sellerFailed, setSeller } from "@/features/seller"
+import { sellerFailed, setSeller } from "@/app/features/seller"
 import { useSellerActivateMutation } from "@/app/services/seller"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"

@@ -22,6 +22,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { useState } from "react"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from "@radix-ui/react-alert-dialog"
+import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog"
 
 
 export function DataTable({ columns, data }) {
@@ -49,10 +51,10 @@ export function DataTable({ columns, data }) {
         <div>
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Search Products..."
-                    value={(table.getColumn("name")?.getFilterValue()) ?? ""}
+                    placeholder="Search Order ID..."
+                    value={(table.getColumn("_id")?.getFilterValue()) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("name")?.setFilterValue(event.target.value)
+                        table.getColumn("_id")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />
