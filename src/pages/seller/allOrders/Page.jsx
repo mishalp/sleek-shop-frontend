@@ -6,7 +6,7 @@ import { useGetAllSellerOrderQuery } from "@/app/services/order"
 
 function Page() {
     const { data, refetch, isLoading, isFetching } = useGetAllSellerOrderQuery()
-    console.log(data);
+
     return (
         <div className="container mx-auto py-10">
             <Button disabled={isLoading || isFetching} onClick={() => refetch()}>
