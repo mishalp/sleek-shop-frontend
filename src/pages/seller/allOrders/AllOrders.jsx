@@ -1,5 +1,6 @@
 import Header from "../components/Header/Header"
 import SideBar from "../components/sideBar/SideBar"
+import Page from "./Page"
 
 function AllOrders() {
     return (
@@ -8,7 +9,7 @@ function AllOrders() {
             <div className="grid grid-cols-[auto,1fr] w-full mt-20">
                 <SideBar active={1} />
                 <div className="p-4">
-                    <h1>All Orders</h1>
+                    <Page />
                 </div>
             </div>
         </div>

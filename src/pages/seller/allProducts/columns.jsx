@@ -67,7 +67,7 @@ export const columns = [
             return <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger className="flex">
-                        <p className="overflow-hidden max-h-4 text-left">{name.substring(0, 25)}{name.length > 25 && "..."}</p>
+                        <p className="overflow-hidden max-h-5 text-left">{name.substring(0, 25)}{name.length > 25 && "..."}</p>
                     </TooltipTrigger>
                     <TooltipContent className="max-w-[20rem]" >
                         <p>{name}</p>

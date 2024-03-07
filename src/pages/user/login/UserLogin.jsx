@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserLoginMutation } from "@/app/services/user"
 import { useSetCartMutation } from "@/app/services/cart"
 import { useDispatch } from "react-redux"
-import { setCart } from "@/features/cart"
+import { setCart } from "@/app/features/cart"
 
 const formSchema = z.object({
     email: z.string({

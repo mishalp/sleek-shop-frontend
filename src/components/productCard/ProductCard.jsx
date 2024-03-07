@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { formatPrice } from '../../utils/utils'
 import { Link } from 'react-router-dom'
 import { Heart, ShoppingCart } from 'lucide-react'
-import { addToCart, removeFromCart } from '@/features/cart'
+import { addToCart, removeFromCart } from '@/app/features/cart'
 import { useDispatch, useSelector } from 'react-redux'
 import { useUserVerifyQuery } from '@/app/services/user'
 import { useAddCartProductMutation, useRemoveCartProductMutation } from '@/app/services/cart'
@@ -21,7 +21,6 @@ function ProductCard({ item, id }) {
     const [removeCartProduct, { isLoading: removeCartLoading }] = useRemoveCartProductMutation()
 
     let isInCart = cart?.findIndex(item => item.item._id === id)
-    console.log(cart[0]);
 
     const handleClick = (e) => {
         if (ref.current.contains(e.target))

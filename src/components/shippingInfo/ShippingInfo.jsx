@@ -1,18 +1,8 @@
-
-import { ReloadIcon } from "@radix-ui/react-icons"
-import { useToast } from "@/components/ui/use-toast"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import FormInput from "@/components/formInput/FormInput";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux"
-
 import { Country, State } from "country-state-city";
 
 export default function ShippingInfo({ form }) {
-    const { toast } = useToast()
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     return (
         <div className=" bg-myprimary flex flex-col justify-center items-center p-4">

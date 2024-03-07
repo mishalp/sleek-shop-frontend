@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { CartData } from '@/components/cartData/CartData'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 
 const formSchema = z.object({
@@ -45,7 +47,8 @@ const formSchema = z.object({
 export default function Checkout() {
 
     const navigate = useNavigate()
-    const prevValues = JSON.parse(localStorage.getItem('order'))
+    const prevValues = JSON.parse(localStorage.getItem('shipping'))
+    const cart = useSelector(state => state.cart.cart)
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -60,8 +63,15 @@ export default function Checkout() {
         },
     })
 
+    useEffect(() => {
+        if (cart.length === 0) {
+            navigate('/')
+        }
+    }, [])
+
     const gotoPayment = (values) => {
-        localStorage.setItem("order", JSON.stringify(values))
+
+        localStorage.setItem("shipping", JSON.stringify(values))
         navigate('/payment')
     }
 

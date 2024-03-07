@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useAddCartProductMutation, useRemoveCartProductMutation } from "@/app/services/cart"
 import { useToast } from "@/components/ui/use-toast"
 import { useUserVerifyQuery } from "@/app/services/user"
-import { addToCart, removeFromCart } from "@/features/cart"
+import { addToCart, removeFromCart } from "@/app/features/cart"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
 function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
