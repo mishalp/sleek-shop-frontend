@@ -20,12 +20,13 @@ import Checkout from './pages/checkout/Checkout'
 import Payment from './pages/payment/Payment'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import Order from './pages/seller/order/Order'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
 function App() {
 
-  const loading = useLoadApp()
+  useLoadApp()
 
   return (
     <>
@@ -65,6 +66,7 @@ function App() {
               <Route exact path='dashboard' element={<SellerDashboard />} />
               <Route exact path='all-orders' element={<AllOrders />} />
               <Route exact path='all-products' element={<AllProducts />} />
+              <Route exact path='order/:orderId' element={<Order />} />
               <Route exact path='create-product' element={<CreateProduct />} />
               <Route exact path='product/edit/:id' element={<EditProduct />} />
             </Route>
