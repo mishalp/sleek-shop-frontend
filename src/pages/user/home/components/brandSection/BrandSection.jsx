@@ -1,8 +1,8 @@
-import sony from '../../../../assets/brands/sony.png'
-import dell from '../../../../assets/brands/dell.png'
-import lg from '../../../../assets/brands/lg.png'
-import apple from '../../../../assets/brands/apple.png'
-import microsoft from '../../../../assets/brands/microsoft.png'
+import sony from '@/assets/brands/sony.png'
+import dell from '@/assets/brands/dell.png'
+import lg from '@/assets/brands/lg.png'
+import apple from '@/assets/brands/apple.png'
+import microsoft from '@/assets/brands/microsoft.png'
 
 const brands = [
     sony,

@@ -1,5 +1,5 @@
-import Button from "../../../../components/button/MyButton"
-import headset from '../../../../assets/images/headset.png'
+import Button from "@/components/button/MyButton"
+import headset from '@/assets/images/headset.png'
 
 function HeroSection() {
     return (

@@ -1,4 +1,4 @@
-import ProductCard from "../../../../components/productCard/ProductCard"
+import ProductCard from "@/components/productCard/ProductCard"
 import { useGetAllProductsQuery } from "@/app/services/products"
 
 function BestSellingSection() {

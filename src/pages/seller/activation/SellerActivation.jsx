@@ -1,4 +1,4 @@
-import { sellerFailed, setSeller } from "@/app/features/seller"
+import { setSellerToken } from "@/app/features/auth"
 import { useSellerActivateMutation } from "@/app/services/seller"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -17,11 +17,10 @@ function SellerActivation() {
             const checkToken = async () => {
                 try {
                     const data = await activate({ activationToken }).unwrap()
-                    dispath(setSeller(data))
+                    localStorage.setItem("sleek_seller_token", JSON.stringify(data.token))
+                    dispath(setSellerToken(data.token))
                     navigate('/seller/dashboard')
                 } catch (error) {
-                    dispath(sellerFailed())
-                    console.log(error);
                     setError(true)
                 }
             }

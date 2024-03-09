@@ -8,6 +8,8 @@ import { Form } from "@/components/ui/form"
 import FormInput from "@/components/formInput/FormInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useSellerLoginMutation } from "@/app/services/seller"
+import { useDispatch } from "react-redux"
+import { setSellerToken } from "@/app/features/auth"
 
 const formSchema = z.object({
     email: z.string({
@@ -25,6 +27,7 @@ function SellerLogin() {
     const { toast } = useToast()
     const [login, { isLoading }] = useSellerLoginMutation()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -36,7 +39,9 @@ function SellerLogin() {
 
     async function onSubmit(values) {
         try {
-            await login(values).unwrap()
+            const data = await login(values).unwrap()
+            localStorage.setItem("sleek_seller_token", JSON.stringify(data.token))
+            dispatch(setSellerToken(data.token))
             toast({
                 title: "Login Success",
                 variant: "success"

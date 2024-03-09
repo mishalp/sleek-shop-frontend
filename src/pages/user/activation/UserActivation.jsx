@@ -1,5 +1,7 @@
+import { setUserToken } from "@/app/features/auth"
 import { useUserActivateMutation } from "@/app/services/user"
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
 function UserActivation() {
@@ -8,12 +10,15 @@ function UserActivation() {
     const [error, setError] = useState(false)
     const [activate] = useUserActivateMutation()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (activationToken) {
             const checkToken = async () => {
                 try {
-                    await activate({ activationToken }).unwrap()
+                    const data = await activate({ activationToken }).unwrap()
+                    localStorage.setItem("sleek_token", JSON.stringify(data.token))
+                    dispatch(setUserToken(data.token))
                     navigate('/')
                 } catch (error) {
                     setError(true)

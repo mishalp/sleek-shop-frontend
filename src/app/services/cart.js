@@ -2,13 +2,23 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const cartApi = createApi({
     reducerPath: 'cartApi',
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_SERVER}/cart` }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_SERVER}/cart`,
+        prepareHeaders: (headers, { getState }) => {
+            const userToken = getState().auth.userToken
+            const sellerToken = getState().auth.sellerToken
+
+            if (userToken) headers.set('authorization', `Bearer ${userToken}`)
+            if (sellerToken) headers.set('seller', `Seller ${sellerToken}`)
+
+            return headers
+        },
+    }),
     tagTypes: ['Cart'],
     endpoints: (builder) => ({
         getCart: builder.query({
             query: () => ({
                 url: `get`,
-                credentials: 'include'
             }),
             // providesTags: ({ cart }, error, arg) => {
             //     return cart
@@ -21,7 +31,6 @@ export const cartApi = createApi({
                 url: 'set-cart',
                 method: 'POST',
                 body: cart,
-                credentials: 'include'
             }),
             // invalidatesTags: ({ cart }, error, arg) => {
             //     return cart
@@ -34,7 +43,6 @@ export const cartApi = createApi({
                 url: 'increment',
                 method: 'PATCH',
                 body: { id },
-                credentials: 'include'
             }),
             // invalidatesTags: ({ cart }, error, arg) => {
             //     return cart
@@ -47,7 +55,6 @@ export const cartApi = createApi({
                 url: 'decrement',
                 method: 'PATCH',
                 body: { id },
-                credentials: 'include'
             })
         }),
         addCartProduct: builder.mutation({
@@ -55,7 +62,6 @@ export const cartApi = createApi({
                 url: 'add',
                 method: 'PATCH',
                 body: { id },
-                credentials: 'include'
             })
         }),
         removeCartProduct: builder.mutation({
@@ -63,7 +69,6 @@ export const cartApi = createApi({
                 url: 'remove',
                 method: 'PATCH',
                 body: { id },
-                credentials: 'include'
             })
         }),
         incrementProdCount: builder.mutation({
@@ -71,7 +76,6 @@ export const cartApi = createApi({
                 url: `increment`,
                 method: 'PATCH',
                 body: { id },
-                credentials: 'include'
             })
         }),
         decrementProdCount: builder.mutation({
@@ -79,7 +83,6 @@ export const cartApi = createApi({
                 url: `decrement`,
                 method: 'PATCH',
                 body: { id },
-                credentials: 'include'
             })
         }),
 

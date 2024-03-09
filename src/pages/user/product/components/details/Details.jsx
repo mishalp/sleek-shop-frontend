@@ -1,5 +1,4 @@
-import Button from "../../../../components/button/MyButton"
-import { formatPrice } from "../../../../utils/utils"
+import { formatPrice } from "@/utils/utils"
 
 function Details({ canvas, product, zoomImg, current }) {
 

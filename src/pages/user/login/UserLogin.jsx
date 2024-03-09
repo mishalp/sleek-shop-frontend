@@ -11,6 +11,7 @@ import { useUserLoginMutation } from "@/app/services/user"
 import { useSetCartMutation } from "@/app/services/cart"
 import { useDispatch } from "react-redux"
 import { setCart } from "@/app/features/cart"
+import { setUserToken } from "@/app/features/auth"
 
 const formSchema = z.object({
     email: z.string({
@@ -58,6 +59,8 @@ function UserLogin() {
     async function onSubmit(values) {
         try {
             const data = await login(values).unwrap()
+            localStorage.setItem("sleek_token", JSON.stringify(data.token))
+            dispatch(setUserToken(data.token))
             toast({
                 title: "Login Success",
                 variant: "success"

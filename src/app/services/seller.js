@@ -2,7 +2,17 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const sellerApi = createApi({
     reducerPath: 'sellerApi',
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_SERVER}/shop` }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_SERVER}/shop`,
+        prepareHeaders: (headers, { getState }) => {
+
+            const sellerToken = getState().auth.sellerToken
+
+            if (sellerToken) headers.set('seller', `Seller ${sellerToken}`)
+
+            return headers
+        },
+    }),
     endpoints: (builder) => ({
         sellerRegister: builder.mutation({
             query: (info) => ({
@@ -16,7 +26,6 @@ export const sellerApi = createApi({
                 url: 'activation',
                 method: 'POST',
                 body: info,
-                credentials: 'include',
             }),
         }),
         sellerLogin: builder.mutation({
@@ -24,16 +33,19 @@ export const sellerApi = createApi({
                 url: 'login',
                 method: 'POST',
                 body: info,
-                credentials: 'include'
             })
         }),
         sellerVerify: builder.query({
             query: () => ({
                 url: 'verify',
-                credentials: 'include'
             })
         })
     })
 })
 
-export const { useSellerRegisterMutation, useSellerActivateMutation, useSellerLoginMutation, useSellerVerifyQuery } = sellerApi
+export const {
+    useSellerRegisterMutation,
+    useSellerActivateMutation,
+    useSellerLoginMutation,
+    useSellerVerifyQuery
+} = sellerApi

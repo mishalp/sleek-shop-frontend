@@ -4,6 +4,15 @@ export const productApi = createApi({
     reducerPath: 'productApi',
     baseQuery: fetchBaseQuery({
         baseUrl: `${import.meta.env.VITE_SERVER}/product`,
+        prepareHeaders: (headers, { getState }) => {
+            const userToken = getState().auth.userToken
+            const sellerToken = getState().auth.sellerToken
+
+            if (userToken) headers.set('authorization', `Bearer ${userToken}`)
+            if (sellerToken) headers.set('seller', `Seller ${sellerToken}`)
+
+            return headers
+        },
     }),
     tagTypes: ['Products'],
     endpoints: (builder) => ({
@@ -12,7 +21,6 @@ export const productApi = createApi({
                 url: 'create',
                 method: 'POST',
                 body: info,
-                credentials: 'include'
             }),
             invalidatesTags: ['Products', 'ShopProducts']
         }),
@@ -40,7 +48,6 @@ export const productApi = createApi({
             query: (id) => ({
                 url: `delete/${id}`,
                 method: 'DELETE',
-                credentials: 'include'
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'Products', id: arg }, { type: 'ShopProducts', id: arg }]
         }),
@@ -49,7 +56,6 @@ export const productApi = createApi({
                 url: `edit/${product.id}`,
                 method: 'PATCH',
                 body: product.data,
-                credentials: 'include'
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'Products', id: arg }, { type: 'ShopProducts', id: arg }]
         })

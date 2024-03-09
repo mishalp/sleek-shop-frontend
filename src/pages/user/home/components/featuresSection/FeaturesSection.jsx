@@ -1,7 +1,7 @@
-import box from '../../../../assets/icons/box.svg'
-import repeat from '../../../../assets/icons/repeat.svg'
-import trophy from '../../../../assets/icons/trophy.svg'
-import shield from '../../../../assets/icons/shield.svg'
+import box from '@/assets/icons/box.svg'
+import repeat from '@/assets/icons/repeat.svg'
+import trophy from '@/assets/icons/trophy.svg'
+import shield from '@/assets/icons/shield.svg'
 
 const features = [
     {

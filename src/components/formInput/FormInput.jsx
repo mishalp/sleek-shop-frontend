@@ -6,14 +6,14 @@ import avatar from '@/assets/icons/avatar.svg'
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
-function FormInput({ form, label, id, className, onChange, type, name, handleImage, list, dp, ...props }) {
+function FormInput({ form, label, id, className, onChange, type, name, handleImage, initialDp, list, dp, ...props }) {
 
     const renderInputes = (field) => {
         switch (type) {
             case "password":
                 return <PasswordInput field={field} />
             case "image":
-                return <ImageInput form={form} name={name} handleImage={handleImage} display={dp} />
+                return <ImageInput field={field} form={form} initialDp={initialDp} name={name} handleImage={handleImage} display={dp} />
             case "textarea":
                 return <Textarea {...field} />
             default:
@@ -55,9 +55,9 @@ function PasswordInput({ field }) {
     )
 }
 
-function ImageInput({ form, name, handleImage, display = true }) {
+function ImageInput({ form, name, field, handleImage, display = true }) {
 
-    const [dp, setDp] = useState(null)
+    const [dp, setDp] = useState(field.value)
 
     const handleFileInput = (e) => {
         const reader = new FileReader();
