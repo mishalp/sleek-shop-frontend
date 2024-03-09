@@ -1,18 +1,21 @@
+import { useUpdateOrderStatusMutation } from "@/app/services/order";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 import { formatPrice } from "@/utils/utils";
 import { Country, State } from "country-state-city";
+import { ReloadIcon } from "@radix-ui/react-icons"
 import { useState } from "react";
 
-export default function OrderDetails({ order }) {
+export default function OrderDetails({ isLoading, isFetching, order, user, seller }) {
 
     if (!order) return <p>loading</p>
 
     return (
         <div className="flex flex-col gap-8">
             <p className="opacity-60">Order Id: #{order._id}</p>
-            <OrderUpdater order={order} />
+            {seller && <OrderUpdater loading={isLoading} fetching={isFetching} order={order} />}
             <div className="flex flex-col gap-8">
                 {order.cart.map((item, index) => (
                     <div key={index} className="grid grid-cols-[5rem,1fr,auto] items-center gap-4">
@@ -57,11 +60,28 @@ let status = [
 
 ]
 
-function OrderUpdater({ order }) {
+function OrderUpdater({ order, loading, fetching }) {
     const [value, setValue] = useState(order.status)
+    const [updateStatus, { isLoading }] = useUpdateOrderStatusMutation()
+    const { toast } = useToast()
+    let flag = false
+
     const handleUpdate = async () => {
         if (order.status === value) return
-        alert(value)
+        try {
+            await updateStatus({ id: order._id, value }).unwrap()
+            toast({
+                title: "Success",
+                description: "Order status updated",
+                variant: "success",
+            })
+        } catch (error) {
+            toast({
+                title: "Failed",
+                description: error.message ? error.message : "Order update failed",
+                variant: "destructive",
+            })
+        }
     }
     return (
         <div className="flex flex-col gap-2">
@@ -72,12 +92,14 @@ function OrderUpdater({ order }) {
                         <SelectValue placeholder={value} />
                     </SelectTrigger>
                     <SelectContent>
-                        {status.map((item, i) => (
+                        {status.filter(item => { if (item === order.status) flag = true; return flag }).map((item, i) => (
                             <SelectItem key={i} value={item}>{item}</SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
-                <Button disabled={order.status === value} onClick={handleUpdate}>Update</Button>
+                <Button disabled={order.status === value || isLoading || loading || fetching} onClick={handleUpdate}>
+                    {isLoading || fetching || loading ? <><ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait</> : "Update"}
+                </Button>
             </div>
         </div>
     )

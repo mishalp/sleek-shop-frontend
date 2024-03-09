@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import Button from "../../../../components/button/MyButton"
+import Button from "@/components/button/MyButton"
 import { useDispatch, useSelector } from "react-redux"
 import { useAddCartProductMutation, useRemoveCartProductMutation } from "@/app/services/cart"
 import { useToast } from "@/components/ui/use-toast"

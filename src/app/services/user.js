@@ -2,7 +2,16 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
     reducerPath: 'userApi',
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_SERVER}/user` }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_SERVER}/user`,
+        prepareHeaders: (headers, { getState }) => {
+            const userToken = getState().auth.userToken
+
+            if (userToken) headers.set('authorization', `Bearer ${userToken}`)
+
+            return headers
+        },
+    }),
     endpoints: (builder) => ({
         userRegister: builder.mutation({
             query: (info) => ({
@@ -16,7 +25,6 @@ export const userApi = createApi({
                 url: 'activation',
                 method: 'POST',
                 body: info,
-                credentials: 'include',
             }),
         }),
         userLogin: builder.mutation({
@@ -24,13 +32,11 @@ export const userApi = createApi({
                 url: 'login',
                 method: 'POST',
                 body: info,
-                credentials: 'include'
             })
         }),
         userVerify: builder.query({
             query: () => ({
                 url: 'verify',
-                credentials: 'include'
             }),
         }),
     })

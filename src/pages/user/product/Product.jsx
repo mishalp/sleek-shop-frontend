@@ -1,4 +1,4 @@
-import Header from "../../components/header/Header";
+import Header from "@/components/header/Header";
 import ProductDetailsSection from "./components/productDetailsSection/ProductDetailsSection";
 
 function Product() {

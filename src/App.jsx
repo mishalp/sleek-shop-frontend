@@ -1,26 +1,30 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import Home from './pages/home/Home'
-import SellerUnprotected from './routes/seller/Unprotected'
-import SellerProtected from './routes/seller/Protected'
-import SellerDashboard from './pages/seller/dashboard/SellerDashboard'
-import SellerActivation from './pages/seller/activation/SellerActivation'
-import SellerLogin from './pages/seller/login/SellerLogin'
-import SellerSignUp from './pages/seller/signUp/SellerSignUp'
-import Product from './pages/product/Product'
-import useLoadApp from './hooks/useLoadApp'
-import AllOrders from './pages/seller/allOrders/AllOrders'
-import AllProducts from './pages/seller/allProducts/AllProducts'
-import CreateProduct from './pages/seller/createProduct/CreateProduct'
-import EditProduct from './pages/seller/editProduct/EditProduct'
-import UserLogin from './pages/user/login/UserLogin'
-import UserSignUp from './pages/user/signUp/UserSignUp'
-import UserActivation from './pages/user/activation/UserActivation'
-import Search from './pages/search/Search'
-import Checkout from './pages/checkout/Checkout'
-import Payment from './pages/payment/Payment'
+import SellerUnprotected from '@/routes/seller/Unprotected'
+import SellerProtected from '@/routes/seller/Protected'
+import UserProtected from '@/routes/user/Protected'
+import SellerDashboard from '@/pages/seller/dashboard/SellerDashboard'
+import SellerActivation from '@/pages/seller/activation/SellerActivation'
+import SellerLogin from '@/pages/seller/login/SellerLogin'
+import SellerSignUp from '@/pages/seller/signUp/SellerSignUp'
+import useLoadApp from '@/hooks/useLoadApp'
+import AllOrders from '@/pages/seller/allOrders/AllOrders'
+import AllProducts from '@/pages/seller/allProducts/AllProducts'
+import CreateProduct from '@/pages/seller/createProduct/CreateProduct'
+import EditProduct from '@/pages/seller/editProduct/EditProduct'
+import UserLogin from '@/pages/user/login/UserLogin'
+import UserSignUp from '@/pages/user/signUp/UserSignUp'
+import UserActivation from '@/pages/user/activation/UserActivation'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import Order from './pages/seller/order/Order'
+import Order from '@/pages/seller/order/Order'
+import UserOrder from '@/pages/user/orders/Order'
+import Home from '@/pages/user/home/Home'
+import Product from '@/pages/user/product/Product'
+import Search from '@/pages/user/search/Search'
+import Checkout from '@/pages/user/checkout/Checkout'
+import Payment from '@/pages/user/payment/Payment'
+import Profile from '@/pages/user/profile/Profile'
+import Orders from '@/pages/user/orders/Orders'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -71,6 +75,13 @@ function App() {
               <Route exact path='product/edit/:id' element={<EditProduct />} />
             </Route>
 
+            {/*====================== User Protected route =====================*/}
+            <Route exact path='/user' element={<UserProtected />}>
+              <Route index element={<Navigate to='profile' />} />
+              <Route exact path='profile' element={<Profile />} />
+              <Route exact path='orders' element={<Orders />} />
+              <Route exact path='orders/:orderId' element={<UserOrder />} />
+            </Route>
           </Routes>
         </Elements>
       </BrowserRouter>

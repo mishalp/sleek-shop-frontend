@@ -71,13 +71,13 @@ function Header() {
     const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
     const cart = useSelector(state => state.cart.cart)
     const navigate = useNavigate()
-
+    console.log(data);
     function getResult(value) {
         navigate(`/search/${value}`)
     }
 
     return (
-        <div className={`w-full z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
+        <div className={`w-full top-0 z-10 text-white overflow-hidden text-lg justify-between items-center bg-mysecondary p-4 lg:px-8 fixed sm:grid-cols-[auto,1fr,auto] lg:grid-cols-[auto,1fr,auto,auto] xl:grid-cols-3 gap-x-8 grid grid-cols-3`}>
             <img src={menu} alt="" className='xl:hidden w-7' onClick={() => setShow(!show)} />
             <div className="flex gap-6 justify-center items-center sm:justify-self-start">
                 <Link to='/'>
@@ -107,7 +107,9 @@ function Header() {
                                 </div>}
                         </SheetTrigger>
                         {!userLoading && !userError ?
-                            <img src={data.user.avatar.url} className='w-[2.5rem] h-auto aspect-square object-cover rounded-full hidden sm:flex' alt="" />
+                            <Link to='/user/profile'>
+                                <img src={data.user.avatar.url} className='w-[2.5rem] h-auto aspect-square object-cover rounded-full hidden sm:flex' alt="" />
+                            </Link>
                             :
                             // <CircleUserRound size={32} strokeWidth={1.5} className="hidden sm:flex" />
                             <Link to='/auth/user/login' className='px-2 py-1 font-medium border-myprimary border-2 hover:bg-mysecondary hover:text-myprimary duration-200 rounded bg-myprimary text-mysecondary'>Log In</Link>
