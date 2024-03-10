@@ -20,11 +20,6 @@ export const cartApi = createApi({
             query: () => ({
                 url: `get`,
             }),
-            // providesTags: ({ cart }, error, arg) => {
-            //     return cart
-            //         ? [...cart.map((item) => ({ type: 'Cart', id: item._id }))]
-            //         : ['Cart']
-            // }
         }),
         setCart: builder.mutation({
             query: (cart) => ({
@@ -32,11 +27,6 @@ export const cartApi = createApi({
                 method: 'POST',
                 body: cart,
             }),
-            // invalidatesTags: ({ cart }, error, arg) => {
-            //     return cart
-            //         ? [...cart.map((item) => ({ type: 'Cart', id: item._id }))]
-            //         : ['Cart']
-            // }
         }),
         incrementCart: builder.mutation({
             query: (id) => ({
@@ -44,11 +34,6 @@ export const cartApi = createApi({
                 method: 'PATCH',
                 body: { id },
             }),
-            // invalidatesTags: ({ cart }, error, arg) => {
-            //     return cart
-            //         ? [...cart.map((item) => ({ type: 'Cart', id: item._id }))]
-            //         : ['Cart']
-            // }
         }),
         decrementCart: builder.mutation({
             query: (id) => ({

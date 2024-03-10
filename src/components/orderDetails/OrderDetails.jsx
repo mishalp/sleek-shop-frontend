@@ -6,11 +6,40 @@ import { useToast } from "@/components/ui/use-toast";
 import { formatPrice } from "@/utils/utils";
 import { Country, State } from "country-state-city";
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BaggageClaim, Bike, ClipboardCheck, PackageCheck, PackageSearch, Truck } from "lucide-react";
+
+let status = [
+    {
+        title: "Processing",
+        icon: <PackageSearch color="white" />
+    },
+    {
+        title: "Transferred to delivery partner",
+        icon: <BaggageClaim color="white" />
+    },
+    {
+        title: "Shipping",
+        icon: <Truck color="white" />
+    },
+    {
+        title: "Recieved",
+        icon: <ClipboardCheck color="white" />
+    },
+    {
+        title: "On the way",
+        icon: <Bike color="white" />
+    },
+    {
+        title: "Delivered",
+        icon: <PackageCheck color="white" />
+    },
+]
 
 export default function OrderDetails({ isLoading, isFetching, order, user, seller }) {
 
     if (!order) return <p>loading</p>
+    let flag = false
 
     return (
         <div className="flex flex-col gap-8">
@@ -31,6 +60,9 @@ export default function OrderDetails({ isLoading, isFetching, order, user, selle
                 ))}
             </div>
             <Separator />
+            {!seller && <><OrdrerStatusBar limit={status.filter((i, k) => k <= status.findIndex((v) => order.status === v.title))} />
+                <Separator />
+            </>}
             <p className="text-right font-semibold">Total: {formatPrice(order.totalPrice)}</p>
             <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col gap-2">
@@ -49,16 +81,6 @@ export default function OrderDetails({ isLoading, isFetching, order, user, selle
         </div>
     )
 }
-
-let status = [
-    "Processing",
-    "Transferred to delivery partner",
-    "Shipping",
-    "Recieved",
-    "On the way",
-    "Delivered"
-
-]
 
 function OrderUpdater({ order, loading, fetching }) {
     const [value, setValue] = useState(order.status)
@@ -92,14 +114,38 @@ function OrderUpdater({ order, loading, fetching }) {
                         <SelectValue placeholder={value} />
                     </SelectTrigger>
                     <SelectContent>
-                        {status.filter(item => { if (item === order.status) flag = true; return flag }).map((item, i) => (
-                            <SelectItem key={i} value={item}>{item}</SelectItem>
+                        {status.filter(item => { if (item.title === order.status) flag = true; return flag }).map((item, i) => (
+                            <SelectItem key={i} value={item.title}>{item.title}</SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
                 <Button disabled={order.status === value || isLoading || loading || fetching} onClick={handleUpdate}>
                     {isLoading || fetching || loading ? <><ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait</> : "Update"}
                 </Button>
+            </div>
+        </div>
+    )
+}
+
+function OrdrerStatusBar({ limit }) {
+
+    return (
+        <div className="flex flex-col gap-2">
+            <h2>Your Order:</h2>
+            <div className=" grid grid-rows-[repeat(auto-fit,minmax(80px,1fr))] lg:grid-rows-1 lg:grid-cols-6 ">
+                {limit.map((item, i) => (
+                    <div key={i} className="flex max-lg:min-h-[80px] lg:flex-col gap-2 w-full text-center">
+                        <div className="flex items-center justify-center relative">
+                            <div className="flex p-2 z-[2] rounded-full bg-mysecondary relative">
+                                {item.icon}
+                                {limit.length - 1 === i && <span className="absolute rounded-full inset-0 w-full bg-mysecondary animate-ping"></span>}
+                            </div>
+                            <div className="absolute max-lg:top-0 h-1/2 w-2 lg:left-0  lg:w-1/2 bg-mysecondary lg:h-2"></div>
+                            {limit.length - 1 !== i && <div className="absolute max-lg:bottom-0 h-1/2 w-2 lg:right-0 lg:w-1/2 bg-mysecondary lg:h-2"></div>}
+                        </div>
+                        <p className="max-lg:my-auto lg:text-center">{item.title}</p>
+                    </div>
+                ))}
             </div>
         </div>
     )
