@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import SellerUnprotected from '@/routes/seller/Unprotected'
 import SellerProtected from '@/routes/seller/Protected'
 import UserProtected from '@/routes/user/Protected'
+import UserUnProtected from '@/routes/user/UnProtected'
 import SellerDashboard from '@/pages/seller/dashboard/SellerDashboard'
 import SellerActivation from '@/pages/seller/activation/SellerActivation'
 import SellerLogin from '@/pages/seller/login/SellerLogin'
@@ -25,6 +26,7 @@ import Checkout from '@/pages/user/checkout/Checkout'
 import Payment from '@/pages/user/payment/Payment'
 import Profile from '@/pages/user/profile/Profile'
 import Orders from '@/pages/user/orders/Orders'
+import ChangePass from '@/pages/user/changePass/ChangePass'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -53,7 +55,7 @@ function App() {
                 <Route exact path='login' element={<SellerLogin />} />
                 <Route exact path='signup' element={<SellerSignUp />} />
               </Route>
-              <Route exact path='user'>
+              <Route exact path='user' element={<UserUnProtected />}>
                 <Route index element={<Navigate to='login' />} />
                 <Route exact path='login' element={<UserLogin />} />
                 <Route exact path='signup' element={<UserSignUp />} />
@@ -81,6 +83,7 @@ function App() {
               <Route exact path='profile' element={<Profile />} />
               <Route exact path='orders' element={<Orders />} />
               <Route exact path='orders/:orderId' element={<UserOrder />} />
+              <Route exact path='change-password' element={<ChangePass />} />
             </Route>
           </Routes>
         </Elements>

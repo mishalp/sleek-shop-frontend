@@ -79,10 +79,28 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "reveal-x": {
+          from: {
+            width: "0"
+          },
+          to: {
+            width: "100%"
+          }
+        },
+        "reveal-y": {
+          from: {
+            height: "0"
+          },
+          to: {
+            height: "100%"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "reveal-x": "reveal-x 5s ease-in-out",
+        "reveal-y": "reveal-y 5s ease-in-out",
       },
     },
   },

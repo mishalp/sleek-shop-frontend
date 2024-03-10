@@ -14,11 +14,6 @@ export const userMenu = [
         link: '/user/orders'
     },
     {
-        title: "Track Order",
-        icon: <Radar size={size} strokeWidth={strokeWidth} />,
-        link: '/user/track-order'
-    },
-    {
         title: "Refunds",
         icon: <Ticket size={size} strokeWidth={strokeWidth} />,
         link: '/user/refund'
