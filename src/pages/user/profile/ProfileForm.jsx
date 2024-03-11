@@ -1,10 +1,13 @@
-import { useUserVerifyQuery } from "@/app/services/user"
+import { useUpdateUserMutation, useUserVerifyQuery } from "@/app/services/user"
 import FormInput from "@/components/formInput/FormInput"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import getFileData from "@/utils/getFileData"
+import { useToast } from "@/components/ui/use-toast"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 const formSchema = z.object({
     name: z.string({
@@ -13,7 +16,7 @@ const formSchema = z.object({
         message: "Shope name must be at least 2 characters.",
     }).max(20, {
         message: "Shope name must be at most 20 characters"
-    }),
+    }).trim(),
     email: z.string({
         required_error: "Email is required"
     }).trim().email({
@@ -34,6 +37,8 @@ const formSchema = z.object({
 export default function ProfileForm() {
 
     const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
+    const [updateUser, { isLoading }] = useUpdateUserMutation()
+    const { toast } = useToast()
 
     if (userLoading || userError) return null
 
@@ -46,10 +51,40 @@ export default function ProfileForm() {
             avatar: data.user.avatar.url,
         },
     })
-    let loading;
 
-    const onSubmit = () => {
+    const onSubmit = async (values) => {
+        if (data.user.name === values.name && data.user.email === values.email && data.user.avatar.url === values.avatar) {
+            return null
+        }
 
+        try {
+            let avatar = null;
+            if (values.avatar !== data.user.avatar.url) {
+                avatar = await getFileData(values.avatar)
+            }
+            const { email, ...fields } = values
+
+            const res = await updateUser({
+                ...fields,
+                avatar: avatar || values.avatar
+            }).unwrap()
+
+            toast({
+                variant: 'success',
+                title: 'Success',
+                description: res.message
+            })
+
+            form.resetField('password')
+
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: error.data.message
+            })
+        }
     }
 
     return (
@@ -63,8 +98,12 @@ export default function ProfileForm() {
                         <FormInput form={form} name="password" label="Password" type="password" />
                         <FormInput form={form} name="avatar" label="Avatar" type="image" />
 
-                        <Button disabled={loading} className="mt-3 bg-mytertiory" type="submit">
-                            {loading ? <><ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait</> : "Submit"}
+                        <Button disabled={userLoading || isLoading || (
+                            data.user.name === form.getValues('name') &&
+                            data.user.email === form.getValues('email') &&
+                            data.user.avatar.url === form.getValues('avatar')
+                        )} className="mt-3 bg-mytertiory" type="submit">
+                            {isLoading || userLoading ? <><ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait</> : "Submit"}
                         </Button>
                     </form>
                 </Form>
