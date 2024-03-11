@@ -18,7 +18,7 @@ const formSchema = z.object({
         message: "Shope name must be at least 2 characters.",
     }).max(20, {
         message: "Shope name must be at most 20 characters"
-    }),
+    }).trim(),
     email: z.string({
         required_error: "Email is required"
     }).trim().email({

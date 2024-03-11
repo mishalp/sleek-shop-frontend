@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
     reducerPath: 'userApi',
+    tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${import.meta.env.VITE_SERVER}/user`,
         prepareHeaders: (headers, { getState }) => {
@@ -32,12 +33,28 @@ export const userApi = createApi({
                 url: 'login',
                 method: 'POST',
                 body: info,
-            })
+            }),
         }),
         userVerify: builder.query({
             query: () => ({
                 url: 'verify',
             }),
+            providesTags: ['User']
+        }),
+        changeUserPass: builder.mutation({
+            query: (info) => ({
+                url: 'change-password',
+                method: 'PATCH',
+                body: info,
+            })
+        }),
+        updateUser: builder.mutation({
+            query: (info) => ({
+                url: 'update',
+                method: 'PATCH',
+                body: info,
+            }),
+            invalidatesTags: ['User']
         }),
     })
 })
@@ -47,4 +64,6 @@ export const {
     useUserActivateMutation,
     useUserLoginMutation,
     useUserVerifyQuery,
+    useChangeUserPassMutation,
+    useUpdateUserMutation,
 } = userApi

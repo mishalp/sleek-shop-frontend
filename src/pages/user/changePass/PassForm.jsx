@@ -1,10 +1,12 @@
-import { useUserVerifyQuery } from "@/app/services/user"
+import { useChangeUserPassMutation } from "@/app/services/user"
 import FormInput from "@/components/formInput/FormInput"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useToast } from "@/components/ui/use-toast"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 const formSchema = z.object({
     password: z.string().min(6, {
@@ -17,10 +19,8 @@ const formSchema = z.object({
 
 export default function PassForm() {
 
-    const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
-
-    if (userLoading || userError) return null
-
+    const [updatePass, { isLoading }] = useChangeUserPassMutation()
+    const { toast } = useToast()
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -28,10 +28,29 @@ export default function PassForm() {
             newPassword: ""
         },
     })
-    let loading;
 
-    const onSubmit = () => {
-
+    const onSubmit = async (values) => {
+        try {
+            if (values.password === values.newPassword) {
+                return toast({
+                    variant: "destructive",
+                    title: "Use new Password",
+                })
+            }
+            const res = await updatePass(values).unwrap()
+            toast({
+                variant: "success",
+                title: res.message,
+            })
+            form.reset({ newPassword: "", password: "" })
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: error.data.message || "",
+            })
+        }
     }
 
     return (
@@ -42,8 +61,8 @@ export default function PassForm() {
                         <FormInput form={form} name="password" label="Current Password" type="password" />
                         <FormInput form={form} name="newPassword" label="New Password" type="password" />
 
-                        <Button disabled={loading} className="mt-3 bg-mytertiory" type="submit">
-                            {loading ? <><ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait</> : "Submit"}
+                        <Button disabled={isLoading} className="mt-3 bg-mytertiory" type="submit">
+                            {isLoading ? <><ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait</> : "Submit"}
                         </Button>
                     </form>
                 </Form>
