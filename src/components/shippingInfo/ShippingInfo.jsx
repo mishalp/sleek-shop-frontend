@@ -5,14 +5,13 @@ import { Country, State } from "country-state-city";
 export default function ShippingInfo({ form }) {
 
     return (
-        <div className=" bg-myprimary flex flex-col justify-center items-center p-4">
+        <div className=" bg-myprimary flex flex-col justify-center items-center">
             <h2 className="text-xl font-bold font-popins my-2">Shipping Address</h2>
             <div className="bg-white p-6 lg:min-w-[35rem] xl:min-w-[45rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form >
                         <div className="gap-4 grid grid-cols-2">
                             <FormInput form={form} name="fullname" label="Full Name" />
-                            <FormInput form={form} name="email" label="Email" type="email" />
                             <FormInput form={form} name="phone" label="Phone" />
                             <FormInput form={form} name="zip" label="Zip code" />
                             <FormInput

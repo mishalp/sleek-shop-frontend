@@ -27,6 +27,7 @@ import Payment from '@/pages/user/payment/Payment'
 import Profile from '@/pages/user/profile/Profile'
 import Orders from '@/pages/user/orders/Orders'
 import ChangePass from '@/pages/user/changePass/ChangePass'
+import Address from './pages/user/address/Address'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -84,6 +85,7 @@ function App() {
               <Route exact path='orders' element={<Orders />} />
               <Route exact path='orders/:orderId' element={<UserOrder />} />
               <Route exact path='change-password' element={<ChangePass />} />
+              <Route exact path='address' element={<Address />} />
             </Route>
           </Routes>
         </Elements>
