@@ -106,7 +106,7 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
                         {(addCartLoading || removeCartLoading) && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
                         {isInCart != -1 ? "Remove from cart" : "Add to Cart"}
                     </Button>
-                    <Button title="Buy Now" primary className='min-w-44 !rounded' />
+                    {/* <Button title="Buy Now" primary className='min-w-44 !rounded' /> */}
                 </div>
             </div>
         </div>

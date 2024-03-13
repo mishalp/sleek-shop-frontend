@@ -56,6 +56,14 @@ export const userApi = createApi({
             }),
             invalidatesTags: ['User']
         }),
+        addAddress: builder.mutation({
+            query: (info) => ({
+                url: 'add-address',
+                method: 'POST',
+                body: { address: info },
+            }),
+            invalidatesTags: ['User']
+        }),
     })
 })
 
@@ -66,4 +74,5 @@ export const {
     useUserVerifyQuery,
     useChangeUserPassMutation,
     useUpdateUserMutation,
+    useAddAddressMutation,
 } = userApi

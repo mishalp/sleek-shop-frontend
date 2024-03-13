@@ -13,11 +13,11 @@ export const userMenu = [
         icon: <ShoppingBag size={size} strokeWidth={strokeWidth} />,
         link: '/user/orders'
     },
-    {
-        title: "Refunds",
-        icon: <Ticket size={size} strokeWidth={strokeWidth} />,
-        link: '/user/refund'
-    },
+    // {
+    //     title: "Refunds",
+    //     icon: <Ticket size={size} strokeWidth={strokeWidth} />,
+    //     link: '/user/refund'
+    // },
     {
         title: "Change Password",
         icon: <LockKeyhole size={size} strokeWidth={strokeWidth} />,
@@ -26,7 +26,7 @@ export const userMenu = [
     {
         title: "Address",
         icon: <NotebookTabs size={size} strokeWidth={strokeWidth} />,
-        link: '/seller/create-event'
+        link: '/user/address'
     },
     {
         title: "Settings",
