@@ -27,7 +27,8 @@ import Payment from '@/pages/user/payment/Payment'
 import Profile from '@/pages/user/profile/Profile'
 import Orders from '@/pages/user/orders/Orders'
 import ChangePass from '@/pages/user/changePass/ChangePass'
-import Address from './pages/user/address/Address'
+import Address from '@/pages/user/address/Address'
+import Settings from '@/pages/user/settings/Settings'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -44,8 +45,6 @@ function App() {
             <Route exact path='/' element={<Home />} />
             <Route exact path='/products/:prodId' element={<Product />} />
             <Route exact path='/search/:search' element={<Search />} />
-            <Route exact path='/checkout' element={<Checkout />} />
-            <Route exact path='/payment' element={<Payment />} />
 
             {/* ========== Unprotected Routes ======== */}
 
@@ -82,10 +81,13 @@ function App() {
             <Route exact path='/user' element={<UserProtected />}>
               <Route index element={<Navigate to='profile' />} />
               <Route exact path='profile' element={<Profile />} />
+              <Route exact path='checkout' element={<Checkout />} />
+              <Route exact path='payment' element={<Payment />} />
               <Route exact path='orders' element={<Orders />} />
               <Route exact path='orders/:orderId' element={<UserOrder />} />
               <Route exact path='change-password' element={<ChangePass />} />
               <Route exact path='address' element={<Address />} />
+              <Route exact path='settings' element={<Settings />} />
             </Route>
           </Routes>
         </Elements>

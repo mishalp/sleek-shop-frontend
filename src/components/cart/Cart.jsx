@@ -27,7 +27,7 @@ export default function Cart() {
                     </div>
                 }
             </div>
-            <button disabled={cart.length === 0} onClick={() => navigate('/checkout')} className="absolute disabled:opacity-50 h-16 shadow-md hover:shadow-xl rounded-md bottom-4 right-4 left-4 bg-mysecondary">
+            <button disabled={cart.length === 0} onClick={() => navigate('/user/checkout')} className="absolute disabled:opacity-50 h-16 shadow-md hover:shadow-xl rounded-md bottom-4 right-4 left-4 bg-mysecondary">
                 <p className='text-xl text-white font-semibold'>Checkout Now ({formatPrice(cart.reduce((total, prod) => total + (prod.item.price * prod.count), 0))})</p>
             </button>
         </div>

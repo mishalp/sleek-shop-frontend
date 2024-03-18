@@ -23,11 +23,11 @@ export default function PaymentData({ form, setType, type }) {
                 </RadioGroup>
 
             </div>
-            <div className="bg-white p-6 lg:min-w-[35rem] xl:min-w-[45rem] flex flex-col gap-6 shadow rounded">
+            <div className="bg-white p-6 max-md:w-full lg:min-w-[35rem] xl:min-w-[45rem] flex flex-col gap-6 shadow rounded">
                 {type === 'card' ? (
                     <Form {...form}>
                         <form >
-                            <div className="gap-4 grid grid-cols-2">
+                            <div className="gap-4 grid max-md:grid-cols-1 grid-cols-2">
                                 <FormInput form={form} name="fullname" label="Name on card" />
                                 <Payform label="Expiry Date">
                                     <CardExpiryElement

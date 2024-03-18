@@ -35,7 +35,7 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
             zoomImg.current.style.transform = `translate(-${posX * 2.2 - 17}%, -${posY * 2.2 - 17}%) scale(3)`
 
         }
-        if (image && image.current && lens && lens.current) {
+        if (image && image.current && lens && lens.current && window.innerWidth >= 1280) {
 
             lens.current.style.width = '35%'
             image.current.addEventListener("mousemove", trackLense)
@@ -88,26 +88,26 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
     if (isLoading) return <p>loading</p>
 
     return (
-        <div ref={display} className="p-3 flex gap-3 w-full sticky top-[100px] h-fit">
-            <div className="flex flex-col gap-4 bg-myprimary">
+        <div ref={display} className="p-3 grid grid-cols-1 md:grid-cols-[auto,1fr] max-lg:gap-6 gap-2    w-full lg:sticky lg:top-[100px] lg:h-fit">
+            <div className="flex mx-auto max-md:row-[2/3] md:flex-col gap-4 bg-myprimary">
                 {images?.map((img, key) => (
                     <img src={img.url} onClick={() => setCurrent(key)} key={key} className={`max-w-14 cursor-pointer border-2 ${current === key ? 'border-mytertiory' : 'border-slate-300'} aspect-square object-contain rounded p-2 h-auto mix-blend-multiply`} alt="" />
                 ))}
             </div>
             <div className="flex flex-col gap-3 items-center w-full">
                 <div className="p-3 pt-0 flex w-full justify-center items-center">
-                    <div ref={image} className="relative overflow-hidden cursor-crosshair flex w-full justify-center bg-myprimary">
-                        <img src={images?.[current].url} className="aspect-square object-contain w-full max-h-[60vh] mix-blend-multiply" alt="" />
+                    <div ref={image} className="relative overflow-hidden lg:cursor-crosshair flex w-full justify-center bg-myprimary">
+                        <img src={images?.[current].url} className="aspect-square object-contain w-full max-sm:h-[14rem] sm:max-h-[60vh] mix-blend-multiply" alt="" />
                         <div ref={lens} className="bg-[hsla(0,0%,100%,.3)] border-[#ccc] hidden absolute top-0 left-0 aspect-square max-w-[30%]"></div>
                     </div>
                 </div>
-                <div className="flex gap-4 justify-center">
-                    <Button disabled={addCartLoading || removeCartLoading} onClick={isInCart != -1 ? removeCartItem : addCartItem} className='min-w-12 !rounded flex items-center' >
-                        {(addCartLoading || removeCartLoading) && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-                        {isInCart != -1 ? "Remove from cart" : "Add to Cart"}
-                    </Button>
-                    {/* <Button title="Buy Now" primary className='min-w-44 !rounded' /> */}
-                </div>
+            </div>
+            <div className="flex gap-4 justify-center md:max-lg:col-span-2 md:col-[2/3]">
+                <Button disabled={addCartLoading || removeCartLoading} onClick={isInCart != -1 ? removeCartItem : addCartItem} className='min-w-12 !rounded flex items-center' >
+                    {(addCartLoading || removeCartLoading) && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                    {isInCart != -1 ? "Remove from cart" : "Add to Cart"}
+                </Button>
+                {/* <Button title="Buy Now" primary className='min-w-44 !rounded' /> */}
             </div>
         </div>
     )

@@ -65,12 +65,15 @@ export default function Payment() {
                 const client_secret = res.clientSecret
                 console.log(elements);
                 if (!stripe || !elements) return
-
+                console.log('started');
+                console.log(elements.getElement(CardNumberElement));
                 const result = await stripe.confirmCardPayment(client_secret, {
                     payment_method: {
                         card: elements.getElement(CardNumberElement),
                     },
                 })
+
+                console.log('hi');
 
                 if (result.error) {
                     console.log(result.error);
@@ -87,7 +90,13 @@ export default function Payment() {
                                 email: data.user.email,
                                 id: data.user._id
                             },
-                            cart,
+                            cart: cart.map(prod => ({
+                                item: {
+                                    ...prod.item,
+                                    shop: prod.item.shop._id || prod.item.shop
+                                },
+                                count: prod.count
+                            })),
                             shippingAddress: prevValues,
                             totalPrice: total,
                             paymentInfo: {
@@ -113,7 +122,13 @@ export default function Payment() {
                         email: data.user.email,
                         id: data.user._id
                     },
-                    cart,
+                    cart: cart.map(prod => ({
+                        item: {
+                            ...prod.item,
+                            shop: prod.item.shop._id || prod.item.shop
+                        },
+                        count: prod.count
+                    })),
                     shippingAddress: prevValues,
                     totalPrice: total,
                     paymentInfo: {
@@ -148,7 +163,7 @@ export default function Payment() {
                 <CheckoutBar active={active} />
                 {active === 2 ? (
                     <>
-                        <div className="flex gap-4 items-center">
+                        <div className="grid max-md:grid-cols-1 grid-cols-[auto,auto] gap-4 items-center">
                             <PaymentData type={type} setType={setType} form={form} />
                             <CartData />
                         </div>

@@ -46,7 +46,8 @@ export default function Checkout() {
 
     const navigate = useNavigate()
     const prevValues = JSON.parse(localStorage.getItem('shipping'))
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cart.cart)
+    const isCartLoading = useSelector(state => state.cart.isloading)
     const { data, isLoading: userLoading, isError: userError } = useUserVerifyQuery()
 
     const form = useForm({
@@ -62,25 +63,26 @@ export default function Checkout() {
     })
 
     useEffect(() => {
-        if (!cart.isloading && cart.cart.length === 0) {
+        if (!isCartLoading && cart.length === 0) {
             navigate('/')
         }
-    }, [cart])
+    }, [isCartLoading])
 
     const gotoPayment = (values) => {
 
         localStorage.setItem("shipping", JSON.stringify(values))
-        navigate('/payment')
+        navigate('/user/payment')
     }
 
     const selectAddress = (value) => {
         const address = data.user.addresses[value]
+        console.log(address);
+        form.setValue("country", address.country)
         form.setValue("fullname", address.fullname)
         form.setValue("phone", address.phone)
-        form.setValue("zip", address.zip)
-        form.setValue("country", address.country)
-        form.setValue("state", address.state)
+        form.setValue("zip", String(address.zip))
         form.setValue("address", address.address)
+        setTimeout(() => form.setValue("state", address.state), 20)
     }
 
     if (cart.isloading) return null
@@ -90,14 +92,14 @@ export default function Checkout() {
             <Header />
             <div className="gap-8 p-4 py-8 pt-32 flex flex-col items-center">
                 <CheckoutBar active={1} />
-                <div className="flex flex-col gap-4">
-                    <div className="flex gap-4 items-center justify-center">
+                <div className="grid max-md:w-full grid-cols-1 gap-4">
+                    <div className="grid grid-cols-[auto,auto] max-md:grid-cols-1 gap-4 items-center justify-center">
                         <ShippingInfo form={form} />
                         <CartData />
                     </div>
                     {!userError && !userLoading && data.user.addresses.length > 0 &&
                         <Select onValueChange={selectAddress}>
-                            <SelectTrigger className="w-fit">
+                            <SelectTrigger className="w-fit max-md:row-[1/2]">
                                 <SelectValue placeholder="Choose from saved Addresses" />
                             </SelectTrigger>
                             <SelectContent>

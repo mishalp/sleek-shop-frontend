@@ -10,6 +10,8 @@ import getFileData from "@/utils/getFileData";
 import FormInput from "@/components/formInput/FormInput";
 import { Link } from "react-router-dom";
 import { useUserRegisterMutation } from "@/app/services/user";
+import authBg from '@/assets/images/bg.svg'
+import logo from '@/assets/icons/newLogo.svg'
 
 const formSchema = z.object({
     name: z.string({
@@ -83,9 +85,9 @@ function UserSignUp() {
     }
 
     return (
-        <div className="w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
-            <h2 className="text-2xl font-bold font-popins my-8">Register User</h2>
-            <div className="bg-white p-6 lg:min-w-[34rem] flex flex-col gap-6 shadow rounded">
+        <div style={{ backgroundImage: `url(${authBg})` }} className="bg-center bg-cover w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
+            <h2 className="text-2xl text-white font-bold font-popins my-8">Register User</h2>
+            <div className="bg-white p-6 min-w-[90vw] sm:min-w-[70vw] md:min-w-[28rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
                         <FormInput form={form} name="name" label="Name" />
@@ -100,6 +102,7 @@ function UserSignUp() {
                 </Form>
                 <p className="text-sm">Already have an account? <Link className="text-blue-500 font-popins" to='/auth/user/login'>Log in</Link></p>
             </div>
+            <img src={logo} className='w-28 mt-16' alt="" />
         </div>
     )
 }

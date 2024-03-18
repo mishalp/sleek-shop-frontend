@@ -7,10 +7,10 @@ export default function ShippingInfo({ form }) {
     return (
         <div className=" bg-myprimary flex flex-col justify-center items-center">
             <h2 className="text-xl font-bold font-popins my-2">Shipping Address</h2>
-            <div className="bg-white p-6 lg:min-w-[35rem] xl:min-w-[45rem] flex flex-col gap-6 shadow rounded">
+            <div className="bg-white p-6 max-md:w-full lg:min-w-[35rem] xl:min-w-[45rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form >
-                        <div className="gap-4 grid grid-cols-2">
+                        <div className="gap-4 max-md:grid-cols-1 grid grid-cols-2">
                             <FormInput form={form} name="fullname" label="Full Name" />
                             <FormInput form={form} name="phone" label="Phone" />
                             <FormInput form={form} name="zip" label="Zip code" />

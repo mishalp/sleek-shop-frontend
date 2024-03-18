@@ -11,10 +11,10 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setUserToken: (state, action) => {
-            state.userToken = action.payload.token
+            state.userToken = action.payload
         },
         setSellerToken: (state, action) => {
-            state.sellerToken = action.payload.token
+            state.sellerToken = action.payload
         }
     }
 })

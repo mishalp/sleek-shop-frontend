@@ -13,7 +13,7 @@ export default function AddressList() {
                 {!userLoading && !userError ?
                     <>
                         {data.user.addresses.map((item, i) => (
-                            <div key={i} className="p-4 flex bg-white justify-between items-center rounded shadow-sm">
+                            <div key={i} className="p-4 flex max-md:flex-col gap-3 bg-white justify-between md:items-center rounded shadow-sm">
                                 <p className="font-semibold">{item.fullname}</p>
                                 <p>{item.address}</p>
                                 <Button className="bg-red-500 w-auto">

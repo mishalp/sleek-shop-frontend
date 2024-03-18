@@ -23,16 +23,16 @@ export default function Order() {
     return (
         <div className='w-screen max-w-full bg-myprimary'>
             <Header />
-            <div className="grid grid-cols-[auto,1fr] w-full mt-20">
+            <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] w-full mt-20">
                 <SideBar role='user' active={1} />
                 <div className="p-4 flex flex-col">
                     <div className="flex gap-2 mr-auto items-center">
-                        <Button onClick={() => navigate('/user/orders')} className="rounded-full ml-8 p-2 h-auto w-auto">
+                        <Button onClick={() => navigate('/user/orders')} className="rounded-full md:ml-8 p-2 h-auto w-auto">
                             <ArrowLeft />
                         </Button>
-                        <h2 className="text-2xl font-bold font-popins text-center  inline-flex gap-2">Order Details</h2>
+                        <h2 className="text-lg md:text-2xl font-bold font-popins text-center  inline-flex gap-2">Order Details</h2>
                     </div>
-                    <div className="container mx-auto py-10">
+                    <div className="mx-3 md:container md:mx-auto py-10">
                         <OrderDetails seller={false} isLoading={isLoading} isFetching={isFetching} order={order} />
                     </div>
                 </div>

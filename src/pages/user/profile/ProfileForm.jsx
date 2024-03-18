@@ -88,9 +88,9 @@ export default function ProfileForm() {
     }
 
     return (
-        <div className="container py-10 bg-myprimary flex flex-col justify-center gap-5 items-center p-4">
+        <div className="md:container py-10 bg-myprimary flex flex-col justify-center gap-5 items-center p-4">
             <img src={data.user.avatar.url} className="w-32 aspect-square rounded-full object-cover" alt="" />
-            <div className="bg-white p-6 lg:min-w-[34rem] flex flex-col gap-6 shadow rounded">
+            <div className="bg-white p-6 min-w-[90vw] md:min-w-[28rem] lg:min-w-[34rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
                         <FormInput form={form} name="name" label="Name" />

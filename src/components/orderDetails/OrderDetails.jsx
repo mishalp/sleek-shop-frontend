@@ -47,19 +47,21 @@ export default function OrderDetails({ isLoading, isFetching, order, user, selle
             {seller && <OrderUpdater loading={isLoading} fetching={isFetching} order={order} />}
             <div className="flex flex-col gap-8">
                 {order.cart.map((item, index) => (
-                    <div key={index} className="grid grid-cols-[5rem,1fr,auto] items-center gap-4">
-                        <img src={item.images[0].url} className='w-20 aspect-square object-contain mix-blend-multiply' alt="" />
-                        <div className="flex flex-col gap-2">
-                            <p className="text-lg">{item.name}</p>
-                            <p className="text-sm">{item.category}</p>
+                    <>
+                        <div key={index} className="grid grid-cols-1 md:grid-cols-[5rem,1fr,auto] items-center gap-4">
+                            <img src={item.images[0].url} className='w-20 aspect-square object-contain mix-blend-multiply' alt="" />
+                            <div className="flex flex-col gap-2">
+                                <p className="md:text-lg font-medium">{item.name}</p>
+                                <p className="text-sm">{item.category}</p>
+                            </div>
+                            <div className="flex">
+                                <p>{formatPrice(item.price)} x {item.qty} = {formatPrice(item.price * item.qty)}</p>
+                            </div>
                         </div>
-                        <div className="flex">
-                            <p>{formatPrice(item.price)} x {item.qty} = {formatPrice(item.price * item.qty)}</p>
-                        </div>
-                    </div>
+                        <Separator />
+                    </>
                 ))}
             </div>
-            <Separator />
             {!seller && <><OrdrerStatusBar limit={status.filter((i, k) => k <= status.findIndex((v) => order.status === v.title))} />
                 <Separator />
             </>}
