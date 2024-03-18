@@ -28,7 +28,7 @@ function useLoadApp() {
             } else {
                 let cart = JSON.parse(localStorage.getItem('cart')) || []
                 console.log(cart);
-                dispath(setCart({ cart: cart.cart || [], user: false }))
+                dispath(setCart({ cart: cart || [], user: false }))
             }
         }
     }, [cartLoading])

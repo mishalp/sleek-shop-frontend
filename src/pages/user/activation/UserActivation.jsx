@@ -3,6 +3,8 @@ import { useUserActivateMutation } from "@/app/services/user"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
+import authBg from '@/assets/images/bg.svg'
+import logo from '@/assets/icons/newLogo.svg'
 
 function UserActivation() {
 
@@ -29,10 +31,11 @@ function UserActivation() {
     }, [])
 
     return (
-        <div className="w-screen max-w-full min-h-screen flex items-center justify-center">
+        <div style={{ backgroundImage: `url(${authBg})` }} className="bg-cover text-center flex-col text-xl text-white bg-center w-screen max-w-full min-h-screen flex pt-40 items-center">
             {error ? <p>Your Token has expired!</p>
                 :
                 <p>Your account has been created suceessfully!</p>}
+            <img src={logo} className='w-28 mt-16' alt="" />
         </div>
     )
 }

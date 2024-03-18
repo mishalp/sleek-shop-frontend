@@ -23,8 +23,7 @@ function ProductCard({ item, id }) {
     let isInCart = cart?.findIndex(item => item.item._id === id)
 
     const handleClick = (e) => {
-        if (ref.current.contains(e.target))
-            e.preventDefault()
+        if (window.innerWidth >= 1280 && ref.current.contains(e.target)) e.preventDefault()
     }
 
     const addCartItem = async () => {
@@ -70,7 +69,7 @@ function ProductCard({ item, id }) {
             <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
                 {/* <img src={item.images[0].url} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" /> */}
                 <ImageLoader className="aspect-square object-contain group-hover:scale-[1.1] duration-200" src={item.images[0].url} />
-                <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden group-hover:flex items-center justify-center">
+                <div className="bg-[rgba(255,255,255,.8)] gap-4 z-[1] absolute inset-0 hidden xl:group-hover:flex items-center justify-center">
                     {/* <button className="p-2 bg-white cursor-pointer flex items-center justify-center rounded-full shadow-md" >
                         <Heart />
                     </button> */}

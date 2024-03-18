@@ -17,7 +17,7 @@ function ProductDetailsSection() {
     if (!product) return <p>loading</p>
 
     return (
-        <div className="p-3 grid lg:grid-cols-2 pt-24 min-h-screen">
+        <div className="p-4 grid grid-cols-1 lg:grid-cols-2 pt-24 min-h-screen">
             <Display product={product} current={current} setCurrent={setCurrent} images={product.images} zoomImg={zoomImg} canvas={canvas} />
             <Details canvas={canvas} current={current} zoomImg={zoomImg} product={product} />
         </div>

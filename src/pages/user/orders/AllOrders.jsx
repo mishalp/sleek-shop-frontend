@@ -13,7 +13,7 @@ export default function AllOrders() {
     if (isError) return null
 
     return (
-        <div className="container mx-auto py-10 flex gap-4 flex-col">
+        <div className="md:container mx-auto py-10 flex gap-4 flex-col">
             {!isLoading ?
                 data.orders.length < 1 ?
                     <div className="w-full min-h-[20rem] text-2xl text-gray-500 flex gap-2 items-center justify-center font-popins">
@@ -23,7 +23,7 @@ export default function AllOrders() {
                     :
                     <>
                         {data.orders.map(item => (
-                            <div key={item._id} className="flex flex-col lg:grid gap-4 grid-cols-3 grid-rows-[auto,auto,1fr] p-4 justify-between bg-white">
+                            <div key={item._id} className="flex flex-col max-md:text-sm lg:grid gap-4 grid-cols-3 grid-rows-[auto,auto,1fr] p-4 justify-between bg-white">
                                 <div className="flex gap-2 col-span-3">
                                     <p className='font-semibold'>Order Id:</p>
                                     <p className='opacity-50'>#{item._id}</p>

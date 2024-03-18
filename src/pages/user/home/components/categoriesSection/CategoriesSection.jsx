@@ -44,12 +44,12 @@ const categoris = [
 
 function CategoriesSection() {
     return (
-        <div className="xl:p-6 font-popins overflow-auto disableScrollBar">
-            <div className="p-4 m-6 xl:m-0 bg-white flex w-fit xl:w-auto xl:grid xl:grid-cols-5 justify-items-center gap-4 rounded-md">
+        <div className="xl:p-6 font-popins">
+            <div className="m-6 xl:m-0 xl:w-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-center gap-2 md:gap-4 rounded-md">
                 {categoris.map((item, key) => (
-                    <a key={key} href="#" className="flex-col xl:flex-row min-w-36 flex gap-2 items-center group">
-                        <img src={item.img} className="w-24 z-0 duration-300 group-hover:scale-[1.2] aspect-square object-contain rounded-lg" alt="" />
-                        <p className="text-lg z-[2]">{item.title}</p>
+                    <a key={key} href="#" className="flex-col bg-white w-full rounded-md p-4 xl:flex-row min-w-36 flex gap-2 items-center">
+                        <img src={item.img} className="w-16 md:w-24 z-0 duration-300 aspect-square object-contain rounded-lg" alt="" />
+                        <p className="text-center md:text-lg z-[2]">{item.title}</p>
                     </a>
                 ))}
             </div>

@@ -57,6 +57,7 @@ export default function AddressForm({ btnRef }) {
 
     const onSubmit = async (values) => {
         try {
+            console.log(values);
             const res = await addAddress(values).unwrap()
             toast({
                 title: "Success",

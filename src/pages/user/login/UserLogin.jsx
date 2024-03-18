@@ -12,6 +12,8 @@ import { useSetCartMutation } from "@/app/services/cart"
 import { useDispatch } from "react-redux"
 import { setCart } from "@/app/features/cart"
 import { setUserToken } from "@/app/features/auth"
+import authBg from '@/assets/images/bg.svg'
+import logo from '@/assets/icons/newLogo.svg'
 
 const formSchema = z.object({
     email: z.string({
@@ -29,7 +31,6 @@ function UserLogin() {
     const { toast } = useToast()
     const [login, { isLoading }] = useUserLoginMutation()
     const [setCartItems] = useSetCartMutation()
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const form = useForm({
@@ -41,18 +42,22 @@ function UserLogin() {
     })
 
     async function mergeCart(data) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const localCart = JSON.parse(localStorage.getItem('cart'))
-            if (localCart && localCart?.length < 1) return
-            console.log(data);
-            const mergedCart = data.user.cart.length < 1 ? localCart : [...data.cart, ...localCart]
-            const newCart = [...new Map(mergedCart.map((m) => [m.id, m])).values()];
-            setCartItems(newCart)
-                .then(() => {
-                    dispatch(setCart({ cart: newCart, isLoading: false }))
-                    resolve()
-                })
-                .catch((error) => reject(error))
+            if (localCart && localCart?.length < 1) return resolve()
+            const mergedCart = data.cart.length < 1 ? localCart : [...data.cart, ...localCart]
+
+            const edited = mergedCart.map(item => ({ count: item.count, item: item.item._id }))
+
+            const newCart = [...new Map(edited.map((m) => [m.item, m])).values()];
+
+            try {
+                await setCartItems(newCart)
+                dispatch(setCart({ cart: newCart, isLoading: false }))
+                resolve()
+            } catch (error) {
+                reject(error)
+            }
         })
     }
 
@@ -65,8 +70,9 @@ function UserLogin() {
                 title: "Login Success",
                 variant: "success"
             })
-            mergeCart(data).then(() => localStorage.removeItem('cart')).catch(err => console.log(err))
-                .finally(() => navigate("/"))
+            await mergeCart(data)
+            localStorage.removeItem('cart')
+            window.location.reload()
         } catch (error) {
             console.log(error);
             toast({
@@ -77,9 +83,9 @@ function UserLogin() {
     }
 
     return (
-        <div className="w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
-            <h2 className="text-2xl font-bold font-popins my-8">Login</h2>
-            <div className="bg-white p-6 lg:min-w-[26rem] flex flex-col gap-6 shadow rounded">
+        <div style={{ backgroundImage: `url(${authBg})` }} className="w-screen bg-center bg-cover max-w-full min-h-screen bg-myprimary flex flex-col pt-28 items-center p-4">
+            <h2 className="text-2xl text-white font-bold font-popins my-8">Login</h2>
+            <div className="bg-white p-6 min-w-[90vw] sm:min-w-[70vw] md:min-w-[28rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
                         <FormInput form={form} name="email" label="Email" type="email" />
@@ -91,6 +97,7 @@ function UserLogin() {
                 </Form>
                 <p className="text-sm">Not have any account? <Link className="text-blue-500 font-popins" to='/auth/user/signup'>Sign Up</Link></p>
             </div>
+            <img src={logo} className='w-28 mt-16' alt="" />
         </div>
     )
 }
