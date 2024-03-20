@@ -10,7 +10,7 @@ import { useToast } from '../ui/use-toast'
 import { Button } from '../ui/button'
 import ImageLoader from '../imageLoader/ImageLoader'
 
-function ProductCard({ item, id }) {
+function ProductCard({ item, id, className }) {
 
     const ref = useRef()
     const { toast } = useToast()
@@ -65,7 +65,7 @@ function ProductCard({ item, id }) {
     }
 
     return (
-        <Link to={`/products/${id}`} onClick={handleClick} className="relative min-w-64 xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded-sm overflow-hidden">
+        <Link to={`/products/${id}`} onClick={handleClick} className={`relative xl:min-w-fit bg-white p-3 grid grid-cols-1 hover:shadow-md gap-2 rounded-sm overflow-hidden ${className}`}>
             <div ref={ref} className="p-3 group cursor-default overflow-hidden flex justify-center items-center relative">
                 {/* <img src={item.images[0].url} className="aspect-square object-contain group-hover:scale-[1.1] duration-200" alt="" /> */}
                 <ImageLoader className="aspect-square object-contain group-hover:scale-[1.1] duration-200" src={item.images[0].url} />
@@ -79,11 +79,11 @@ function ProductCard({ item, id }) {
                 </div>
             </div>
             <div className="z-[1] bg-white flex flex-col items-start gap-2 justify-between">
-                <p className="text-md w-full overflow-hidden whitespace-nowrap text-ellipsis md:text-lg">{item.name.substring(0, 30)}{item.name.length > 30 && "..."}</p>
-                <div className="px-2 py-1 text-sm rounded-lg h-fit justify-self-start bg-mytertiory text-white">
-                    {item?.rating?.rate || "No Rating"}★
+                <p className="w-full overflow-hidden whitespace-nowrap text-ellipsis md:text-lg">{item.name.substring(0, 30)}{item.name.length > 30 && "..."}</p>
+                <div className="px-2 py-1 flex gap-2 text-[.7rem] sm:text-sm rounded-lg h-fit justify-self-start bg-mytertiory text-white">
+                    {item?.rating?.rate || "No Rating "}★
                 </div>
-                <h3 className="font-semibold text-xl">{formatPrice(item.price)}</h3>
+                <h3 className="font-semibold text-base sm:text-xl">{formatPrice(item.price)}</h3>
             </div>
             {isInCart != -1 &&
                 <div className="absolute top-0 left-4 z-[2] flex flex-col w-[36px]">

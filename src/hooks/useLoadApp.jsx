@@ -1,24 +1,12 @@
 import { useGetCartQuery } from '@/app/services/cart'
-import { useGetAllProductsQuery } from '@/app/services/products'
 import { setCart } from '@/app/features/cart'
-import { prodcutsFailed, setProducts } from '@/app/features/prodcts'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 function useLoadApp() {
     const dispath = useDispatch()
-    const { data, isLoading, isError } = useGetAllProductsQuery()
     const { data: cart, isLoading: cartLoading, isError: cartError } = useGetCartQuery()
 
-    useEffect(() => {
-        if (!isLoading) {
-            if (!isError) {
-                dispath(setProducts(data))
-            } else {
-                dispath(prodcutsFailed())
-            }
-        }
-    }, [isLoading])
 
     useEffect(() => {
         if (!cartLoading) {
@@ -33,6 +21,6 @@ function useLoadApp() {
         }
     }, [cartLoading])
 
-    return isLoading
+    return cartLoading
 }
 export default useLoadApp

@@ -42,10 +42,10 @@ const discount = [
     },
 ]
 
-function FilterBar({ minmax, minmaxValues, sortValue, setSortValue, setFilters, filters }) {
+function FilterBar({ minmax, minmaxValues, sortValue, setSortValue, setFilters, filters, className }) {
 
     return (
-        <div className=" bg-white shadow-md py-2 flex flex-col min-w-60  h-fit">
+        <div className={`bg-white shadow-md py-2 flex flex-col min-w-60 max-h-screen overflow-auto h-fit ${className}`}>
             <h2 className="p-3 font-semibold text-xl">Filters</h2>
             <Separator />
             <FilterMenu title="Sort By">

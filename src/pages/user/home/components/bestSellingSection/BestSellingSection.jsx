@@ -13,7 +13,7 @@ function BestSellingSection() {
             <div className="overflow-auto disableScrollBar">
                 <div className='flex xl:grid w-fit mx-6 my-2 xl:grid-cols-5 gap-4'>
                     {data.products.map(item => (
-                        <ProductCard item={item} id={item._id} key={item._id} />
+                        <ProductCard className="min-w-64" item={item} id={item._id} key={item._id} />
                     ))}
                 </div>
             </div>
