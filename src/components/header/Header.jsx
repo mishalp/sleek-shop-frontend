@@ -38,7 +38,7 @@ const links = [
     // },
     {
         text: "FAQ",
-        link: "#"
+        link: "/faq"
     },
 ]
 

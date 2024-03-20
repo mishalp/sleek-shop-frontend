@@ -81,7 +81,7 @@ function ProductCard({ item, id, className }) {
             <div className="z-[1] bg-white flex flex-col items-start gap-2 justify-between">
                 <p className="w-full overflow-hidden whitespace-nowrap text-ellipsis md:text-lg">{item.name.substring(0, 30)}{item.name.length > 30 && "..."}</p>
                 <div className="px-2 py-1 flex gap-2 text-[.7rem] sm:text-sm rounded-lg h-fit justify-self-start bg-mytertiory text-white">
-                    {item?.rating?.rate || "No Rating "}★
+                    {item.ratings ? (parseInt(item.ratings)).toFixed(1) : "No Rating "}★
                 </div>
                 <h3 className="font-semibold text-base sm:text-xl">{formatPrice(item.price)}</h3>
             </div>

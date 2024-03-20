@@ -7,7 +7,8 @@ import { formatPrice } from "@/utils/utils";
 import { Country, State } from "country-state-city";
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useEffect, useRef, useState } from "react";
-import { BaggageClaim, Bike, ClipboardCheck, PackageCheck, PackageSearch, Truck } from "lucide-react";
+import { BaggageClaim, Bike, ClipboardCheck, PackageCheck, PackageSearch, Star, Truck } from "lucide-react";
+import { ReviewDialog } from "./ReviewDialog";
 
 let status = [
     {
@@ -55,8 +56,13 @@ export default function OrderDetails({ isLoading, isFetching, order, user, selle
                                 <p className="text-sm">{item.category}</p>
                             </div>
                             <div className="flex">
-                                <p>{formatPrice(item.price)} x {item.qty} = {formatPrice(item.price * item.qty)}</p>
+                                <p>{item.qty} x {formatPrice(item.price)} = {formatPrice(item.price * item.qty)}</p>
                             </div>
+                            {!seller && order.status === "Delivered" &&
+                                <div>
+                                    {item.isReviewed ? <h4 className="italic">Reviewed</h4> : <ReviewDialog product={item} orderId={order._id} />}
+                                </div>
+                            }
                         </div>
                         <Separator />
                     </>
