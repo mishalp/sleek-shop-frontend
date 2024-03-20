@@ -1,4 +1,5 @@
 import { formatPrice } from "@/utils/utils"
+import { Star } from "lucide-react"
 
 function Details({ canvas, product, zoomImg, current }) {
 
@@ -34,10 +35,36 @@ function Details({ canvas, product, zoomImg, current }) {
                             <button className="bg-mytertiory max-md:col-span-2 text-white rounded-lg px-8 py-4 h-fit">Visit Store</button>
                         </div>
                     </div>
+                    <div className="flex flex-col gap-3">
+                        <h4 className="text-2xl">Reviews</h4>
+                        {product.reviews.map((item, i) => (
+                            <div key={i} className="flex  gap-4 p-3 rounded-md md:items-center">
+                                <img src={item.user.avatar.url} className="max-w-16 col-[1/2] rounded-full aspect-square object-cover" alt="" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-lg font-medium flex gap-2">
+                                        {addFill(parseInt(item.rating)).map(item => (
+                                            <Star color="#F6BB33" fill={item} />
+                                        ))}
+                                    </h3>
+                                    <p className="font-semibold">{item.user.name}</p>
+                                    <p className="opacity-70">{item.comment}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </>
     )
+}
+
+const addFill = (rating) => {
+    let fill = ["#F6BB33", "#F6BB33", "#F6BB33", "#F6BB33", "#F6BB33"]
+    fill = fill.map((item, i) => {
+        if (i + 1 <= rating) return item
+        return '#fff'
+    })
+    return fill
 }
 
 export default Details

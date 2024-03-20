@@ -58,7 +58,14 @@ export const productApi = createApi({
                 body: product.data,
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'Products', id: arg }, { type: 'ShopProducts', id: arg }]
-        })
+        }),
+        addReview: builder.mutation({
+            query: (data) => ({
+                url: `add-review`,
+                method: 'PATCH',
+                body: data,
+            }),
+        }),
     })
 })
 
@@ -67,5 +74,6 @@ export const {
     useGetAllProductsQuery,
     useGetShopProdcutsQuery,
     useDeleteProductMutation,
-    useEditProductMutation
+    useEditProductMutation,
+    useAddReviewMutation
 } = productApi
