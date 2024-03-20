@@ -3,6 +3,7 @@ import FormInput from "@/components/formInput/FormInput"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
+import { categories } from "@/data"
 import getFileData from "@/utils/getFileData"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
@@ -47,18 +48,6 @@ const formSchema = z.object({
     }),
     category: z.string()
 })
-
-const categories = [
-    "Computers and Laptops",
-    "Cosmetics and body care",
-    "Accesories",
-    "Cloths",
-    "Shoes",
-    "Gifts",
-    "Mobile and Tablets",
-    "Music and Gaming",
-    "Others"
-]
 
 function ProductForm() {
     const { toast } = useToast()

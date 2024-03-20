@@ -29,6 +29,7 @@ import Orders from '@/pages/user/orders/Orders'
 import ChangePass from '@/pages/user/changePass/ChangePass'
 import Address from '@/pages/user/address/Address'
 import Settings from '@/pages/user/settings/Settings'
+import Products from './pages/user/products/Products'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -43,6 +44,7 @@ function App() {
           <Routes >
             {/* ========== User Routes ============ */}
             <Route exact path='/' element={<Home />} />
+            <Route exact path='/products/category/:cat' element={<Products />} />
             <Route exact path='/products/:prodId' element={<Product />} />
             <Route exact path='/search/:search' element={<Search />} />
 

@@ -30,12 +30,12 @@ const links = [
     },
     {
         text: "Products",
-        link: "#"
+        link: "/products/category/all"
     },
-    {
-        text: "Best Selling",
-        link: "#"
-    },
+    // {
+    //     text: "Best Selling",
+    //     link: "#"
+    // },
     {
         text: "FAQ",
         link: "#"
@@ -61,7 +61,11 @@ function Header() {
     const navigate = useNavigate()
     const ref = useRef()
     const refBg = useRef()
+    const searchRef = useRef()
+
     function getResult(value) {
+        searchRef.current.style = 'display: none;'
+        setShow(false)
         navigate(`/search/${value}`)
     }
 
@@ -90,7 +94,7 @@ function Header() {
 
                     <div className="gap-6 items-center justify-self-center hidden lg:flex">
                         {links.map((item, key) => (
-                            <a key={key} href={item.link} className='font-popins font-medium' >{item.text}</a>
+                            <Link key={key} to={item.link} className='font-popins font-medium' >{item.text}</Link>
                         ))}
                     </div>
                     <div className="flex gap-6 justify-end">
@@ -129,7 +133,7 @@ function Header() {
 
                     {/* toggle menu */}
                     <div className={`grid grid-col-1 row-start-2 col-span-full gap-3 transition-all duration-300 ease-in xl:hidden ${!show ? 'max-h-0 max-w-0 overflow-hidden pt-0' : 'max-h-[30rem] pt-8'}`}>
-                        <SearchInput getResult={getResult} className="w-ful" />
+                        <SearchInput searchRef={searchRef} getResult={getResult} className="w-ful" />
                         <div className='flex flex-col sm:hidden justify-between sm:justify-start w-full'>
                             <SheetTrigger className="py-2 active:bg-gray-300 flex gap-4 items-center">
                                 <div className="relative">

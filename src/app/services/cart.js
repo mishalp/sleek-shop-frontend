@@ -27,6 +27,7 @@ export const cartApi = createApi({
                 method: 'POST',
                 body: cart,
             }),
+
         }),
         incrementCart: builder.mutation({
             query: (id) => ({

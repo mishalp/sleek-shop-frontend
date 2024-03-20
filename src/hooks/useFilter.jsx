@@ -23,7 +23,6 @@ function useFilter(data, isLoading, isError, search) {
                 if (item.description.toUpperCase().includes(search.toUpperCase())) return pr3.push(item)
             })
             const products = [...pr1, ...pr2, ...pr3]
-            console.log(products);
             setSearched(products)
             setFiltered(sort(sortValue, products))
             setFilters({
