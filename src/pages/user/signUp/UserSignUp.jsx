@@ -85,7 +85,7 @@ function UserSignUp() {
     }
 
     return (
-        <div style={{ backgroundImage: `url(${authBg})` }} className="bg-center bg-cover w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
+        <div style={{ backgroundImage: `url(${authBg})` }} className="bg-center bg-fixed bg-cover w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
             <h2 className="text-2xl text-white font-bold font-popins my-8">Register User</h2>
             <div className="bg-white p-6 min-w-[90vw] sm:min-w-[70vw] md:min-w-[28rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>

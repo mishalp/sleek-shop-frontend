@@ -1,5 +1,6 @@
 import { formatPrice } from "@/utils/utils"
 import { Star } from "lucide-react"
+import { Link } from "react-router-dom"
 
 function Details({ canvas, product, zoomImg, current }) {
 
@@ -24,7 +25,7 @@ function Details({ canvas, product, zoomImg, current }) {
                         ))}
                     </ul>
                     <div className="flex flex-col gap-3">
-                        <h4 className="text-2xl">Seller Info</h4>
+                        <h4 className="text-2xl font-semibold">Seller Info</h4>
                         <div className="grid grid-cols-[auto,1fr] md:grid-cols-[auto,auto,auto] gap-2 bg-white p-3 rounded-md md:items-center justify-around">
                             <img src={product.shop.avatar.url} className="max-w-16 col-[1/2] rounded-full aspect-square object-cover" alt="" />
                             <div className="flex flex-col">
@@ -32,11 +33,11 @@ function Details({ canvas, product, zoomImg, current }) {
                                 <p>{product.shop.email}</p>
                                 <p>{product.shop.address}</p>
                             </div>
-                            <button className="bg-mytertiory max-md:col-span-2 text-white rounded-lg px-8 py-4 h-fit">Visit Store</button>
+                            <Link to={`/shop/${product.shop._id}`} className="bg-mytertiory max-md:col-span-2 text-white rounded-lg px-8 py-4 h-fit">Visit Store</Link>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-3">
-                        <h4 className="text-2xl">Reviews</h4>
+                    {product.reviews.length > 0 && <div className="flex flex-col gap-3">
+                        <h4 className="text-2xl font-semibold">Reviews</h4>
                         {product.reviews.map((item, i) => (
                             <div key={i} className="flex  gap-4 p-3 rounded-md md:items-center">
                                 <img src={item.user.avatar.url} className="max-w-16 col-[1/2] rounded-full aspect-square object-cover" alt="" />
@@ -51,7 +52,7 @@ function Details({ canvas, product, zoomImg, current }) {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </div>}
                 </div>
             </div>
         </>
