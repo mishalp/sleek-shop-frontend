@@ -75,5 +75,5 @@ export const {
     useGetShopProdcutsQuery,
     useDeleteProductMutation,
     useEditProductMutation,
-    useAddReviewMutation
+    useAddReviewMutation,
 } = productApi

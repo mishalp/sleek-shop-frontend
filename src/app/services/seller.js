@@ -7,7 +7,9 @@ export const sellerApi = createApi({
         prepareHeaders: (headers, { getState }) => {
 
             const sellerToken = getState().auth.sellerToken
+            const userToken = getState().auth.userToken
 
+            if (userToken) headers.set('authorization', `Bearer ${userToken}`)
             if (sellerToken) headers.set('seller', `Seller ${sellerToken}`)
 
             return headers
@@ -39,7 +41,12 @@ export const sellerApi = createApi({
             query: () => ({
                 url: 'verify',
             })
-        })
+        }),
+        getShop: builder.query({
+            query: (id) => ({
+                url: `get-shop/${id}`,
+            }),
+        }),
     })
 })
 
@@ -47,5 +54,6 @@ export const {
     useSellerRegisterMutation,
     useSellerActivateMutation,
     useSellerLoginMutation,
-    useSellerVerifyQuery
+    useSellerVerifyQuery,
+    useGetShopQuery
 } = sellerApi

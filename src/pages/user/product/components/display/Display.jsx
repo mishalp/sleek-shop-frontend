@@ -88,7 +88,7 @@ function Display({ images, product, canvas, zoomImg, current, setCurrent }) {
     if (isLoading) return <p>loading</p>
 
     return (
-        <div ref={display} className="p-3 grid grid-cols-1 md:grid-cols-[auto,1fr] max-lg:gap-6 gap-2    w-full lg:sticky lg:top-[100px] lg:h-fit">
+        <div ref={display} className="p-3 grid grid-cols-1 md:grid-cols-[auto,1fr] max-lg:gap-6 gap-2  w-full lg:sticky lg:top-[100px] lg:h-fit">
             <div className="flex mx-auto max-md:row-[2/3] md:flex-col gap-4 bg-myprimary">
                 {images?.map((img, key) => (
                     <img src={img.url} onClick={() => setCurrent(key)} key={key} className={`max-w-14 cursor-pointer border-2 ${current === key ? 'border-mytertiory' : 'border-slate-300'} aspect-square object-contain rounded p-2 h-auto mix-blend-multiply`} alt="" />

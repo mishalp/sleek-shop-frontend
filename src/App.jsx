@@ -31,6 +31,7 @@ import Address from '@/pages/user/address/Address'
 import Settings from '@/pages/user/settings/Settings'
 import Products from '@/pages/user/products/Products'
 import Faq from '@/pages/user/faq/Faq'
+import Shop from '@/pages/user/shop/Shop'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -49,6 +50,7 @@ function App() {
             <Route exact path='/products/:prodId' element={<Product />} />
             <Route exact path='/search/:search' element={<Search />} />
             <Route exact path='/faq' element={<Faq />} />
+            <Route exact path='/shop/:shopId' element={<Shop />} />
 
             {/* ========== Unprotected Routes ======== */}
 

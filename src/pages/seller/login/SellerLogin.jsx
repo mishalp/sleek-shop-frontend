@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSellerLoginMutation } from "@/app/services/seller"
 import { useDispatch } from "react-redux"
 import { setSellerToken } from "@/app/features/auth"
+import authBg from '@/assets/images/bg.svg'
 
 const formSchema = z.object({
     email: z.string({
@@ -57,8 +58,8 @@ function SellerLogin() {
     }
 
     return (
-        <div className="w-screen max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
-            <h2 className="text-2xl font-bold font-popins my-8">Login to your shop</h2>
+        <div style={{ backgroundImage: `url(${authBg})` }} className="w-screen bg-fixed max-w-full min-h-screen bg-myprimary flex flex-col justify-center items-center p-4">
+            <h2 className="text-2xl text-white font-bold font-popins my-8">Login to your shop</h2>
             <div className="bg-white p-6 lg:min-w-[26rem] flex flex-col gap-6 shadow rounded">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="gap-4 flex flex-col">
