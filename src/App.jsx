@@ -32,6 +32,7 @@ import Settings from '@/pages/user/settings/Settings'
 import Products from '@/pages/user/products/Products'
 import Faq from '@/pages/user/faq/Faq'
 import Shop from '@/pages/user/shop/Shop'
+import Coupen from '@/pages/seller/coupen/Coupen'
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLISH_KEY}`);
 
@@ -81,6 +82,7 @@ function App() {
               <Route exact path='order/:orderId' element={<Order />} />
               <Route exact path='create-product' element={<CreateProduct />} />
               <Route exact path='product/edit/:id' element={<EditProduct />} />
+              <Route exact path='coupens' element={<Coupen />} />
             </Route>
 
             {/*====================== User Protected route =====================*/}

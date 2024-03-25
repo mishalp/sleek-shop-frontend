@@ -61,19 +61,16 @@ export default function Payment() {
             setLoading(true)
             let total = cart?.reduce((total, prod) => total + (prod.item.price * prod.count), 0)
             if (type === "card") {
-                const res = await createIntent(total).unwrap()
+                const res = await createIntent((total + 60)).unwrap()
                 const client_secret = res.clientSecret
                 console.log(elements);
                 if (!stripe || !elements) return
-                console.log('started');
-                console.log(elements.getElement(CardNumberElement));
+
                 const result = await stripe.confirmCardPayment(client_secret, {
                     payment_method: {
                         card: elements.getElement(CardNumberElement),
                     },
                 })
-
-                console.log('hi');
 
                 if (result.error) {
                     console.log(result.error);
@@ -98,7 +95,7 @@ export default function Payment() {
                                 count: prod.count
                             })),
                             shippingAddress: prevValues,
-                            totalPrice: total,
+                            totalPrice: (total + 60),
                             paymentInfo: {
                                 id: result.paymentIntent.id,
                                 status: result.paymentIntent.status,
@@ -130,7 +127,7 @@ export default function Payment() {
                         count: prod.count
                     })),
                     shippingAddress: prevValues,
-                    totalPrice: total,
+                    totalPrice: (total + 60),
                     paymentInfo: {
                         type: "Cash on delivery",
                     }

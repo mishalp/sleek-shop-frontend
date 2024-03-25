@@ -23,11 +23,11 @@ export const shopMenu = [
         icon: <PackagePlus size={size} strokeWidth={strokeWidth} />,
         link: '/seller/create-product'
     },
-    {
-        title: "Create Event",
-        icon: <CalendarPlus size={size} strokeWidth={strokeWidth} />,
-        link: '/seller/create-event'
-    },
+    // {
+    //     title: "Create Event",
+    //     icon: <CalendarPlus size={size} strokeWidth={strokeWidth} />,
+    //     link: '/seller/create-event'
+    // },
     {
         title: "Withdraw Money",
         icon: <BanknoteIcon size={size} strokeWidth={strokeWidth} />,

@@ -3,8 +3,6 @@ import ProductCard from '@/components/productCard/ProductCard'
 
 export default function ShopProducts({ products, isLoading, isError }) {
 
-    if (isLoading || isError) return null
-
     return (
         <div className="py-6 lg:p-6 flex flex-col gap-6">
             <h2 className="text-3xl ml-6 font-semibold">Shop Products</h2>
